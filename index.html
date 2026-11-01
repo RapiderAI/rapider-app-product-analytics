@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rapider Product Analytics</title>
+  <script src="https://kit.fontawesome.com/5b23df26dc.js" crossorigin="anonymous" defer></script>
+  <script src="/assets/js/rapider-components.js" defer></script>
+  <link rel="stylesheet" href="/assets/themes/rapider-tailwind-theme.css">
+  <link rel="stylesheet" href="/assets/themes/crm-expenses-design.css">
+  <style>
+    body, html { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; }
+    iframe#appFrame { width: 100%; height: 100%; border: none; }
+  </style>
+</head>
+<body>
+  <iframe id="appFrame" src="pages/product-overview/product-overview.html"></iframe>
+  <script>
+    const routes = {
+  "product-overview": "pages/product-overview/product-overview.html",
+  "funnels": "pages/funnels/funnels.html",
+  "retention-cohorts": "pages/retention-cohorts/retention-cohorts.html",
+  "user-paths": "pages/user-paths/user-paths.html",
+  "behavioral-segments": "pages/behavioral-segments/behavioral-segments.html",
+  "feature-adoption": "pages/feature-adoption/feature-adoption.html",
+  "experiment-impact": "pages/experiment-impact/experiment-impact.html",
+  "event-lexicon": "pages/event-lexicon/event-lexicon.html",
+  "live-event-stream": "pages/live-event-stream/live-event-stream.html",
+  "telemetry-sources": "pages/telemetry-sources/telemetry-sources.html",
+  "funnel-detail": "pages/funnel-detail/funnel-detail.html",
+  "segment-funnel-drawer": "pages/segment-funnel-drawer/segment-funnel-drawer.html"
+};
+    function handleHash() {
+      const hash = window.location.hash.replace(/^#\/?/, '').split('?')[0];
+      const route = hash || 'product-overview';
+      const target = routes[route] || routes['product-overview'];
+      const iframe = document.getElementById('appFrame');
+      if (iframe) iframe.src = target;
+    }
+    window.addEventListener('hashchange', handleHash);
+    window.addEventListener('load', handleHash);
+  </script>
+</body>
+</html>
