@@ -3,714 +3,572 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Behavioral Cohorts - Data &amp; Analytics Suite</title>
+  <title>Behavioral Cohorts — Rapider Product Analytics</title>
   <script src="https://kit.fontawesome.com/5b23df26dc.js" crossorigin="anonymous" defer></script>
   <script src="/assets/js/rapider-components.js" defer></script>
   <link rel="stylesheet" href="/assets/themes/rapider-tailwind-theme.css">
   <link rel="stylesheet" href="/assets/themes/crm-expenses-design.css">
-
   <style>
-    dialog {
-      margin: auto;
-      border: none;
-      padding: 0;
-      background: transparent;
+    :root {
+      --ink: #172137;
+      --muted: #67728a;
+      --line: #e9ecf3;
+      --bg: #f5f6fa;
+      --purple: #6854df;
+      --purple-soft: #f3f0ff;
+      --panel: #ffffff;
+      --dark: #1f243a;
+      --soft: #eeeaff;
+      --green: #16795b;
+      --amber: #b4690e;
+      --red: #b9384f;
+      --radius: 14px;
     }
-    .field input:not([type="checkbox"]):not([type="radio"]),
-    .field select,
-    .field textarea {
-      display: block;
-      width: 100%;
-      min-height: 42px;
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; height: 100%; font: 14px/1.5 -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, sans-serif; background: var(--bg); color: var(--ink); }
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font: inherit; }
+    .btn, button.btn {
+      cursor: pointer; border: 1px solid #dfe3ed; background: #ffffff; color: var(--ink);
+      padding: 8px 14px; border-radius: 9px; font-weight: 600; display: inline-flex;
+      align-items: center; justify-content: center; gap: 7px; font-size: 13px; min-height: 38px;
+      transition: all 0.15s ease;
     }
-    aside.collapsed .sidebar-label, [data-collapsed="true"] .sidebar-label { display: none !important; }
-  </style>
+    .btn:hover { background: #f5f3ff; border-color: #cfc7f4; }
+    .btn.primary, button.primary, a.btn.primary {
+      background: var(--purple) !important; background-color: var(--purple) !important;
+      color: #ffffff !important; border-color: var(--purple) !important;
+      box-shadow: 0 3px 8px rgba(104, 84, 223, 0.22);
+    }
+    .btn.primary:hover, button.primary:hover, a.btn.primary:hover {
+      background: #5844cc !important; color: #ffffff !important;
+    }
+    .btn.danger, button.danger {
+      background: var(--red) !important; color: #ffffff !important; border-color: var(--red) !important;
+    }
+    .btn.small { padding: 5px 10px; min-height: 30px; font-size: 12px; border-radius: 7px; }
+    .btn.icon-only { padding: 6px 9px; min-height: 30px; color: var(--red); border-color: #f1d0d6; background: #fffafb; }
+    .btn.icon-only:hover { background: #fee2e2; }
 
-  <style data-dark-mode-parity>
-    html.dark, body.dark { --ink:#f1f5f9; --muted:#94a3b8; --line:#263044; --bg:#0f172a; --soft:#1e1b4b; background:#0f172a !important; color:#f1f5f9 !important; }
-    html.dark aside, body.dark aside { background: #0f172a !important; border-color: #1e293b !important; }
-    html.dark .bg-white, body.dark .bg-white { background: #1e293b !important; color: #f1f5f9 !important; border-color: #334155 !important; }
-    html.dark .text-slate-900, body.dark .text-slate-900 { color: #f8fafc !important; }
-    html.dark .text-slate-800, body.dark .text-slate-800 { color: #f1f5f9 !important; }
-    html.dark .text-slate-700, body.dark .text-slate-700 { color: #cbd5e1 !important; }
-    html.dark .text-slate-600, body.dark .text-slate-600 { color: #94a3b8 !important; }
-    html.dark .text-slate-500, body.dark .text-slate-500 { color: #64748b !important; }
-    html.dark .border-slate-200, body.dark .border-slate-200 { border-color: #334155 !important; }
-    html.dark .border-slate-100, body.dark .border-slate-100 { border-color: #1e293b !important; }
-    html.dark .bg-slate-50, body.dark .bg-slate-50 { background: #0b1120 !important; }
-    html.dark .bg-slate-100, body.dark .bg-slate-100 { background: #1e293b !important; }
-    html.dark .hover\:bg-slate-50:hover, body.dark .hover\:bg-slate-50:hover { background: #1e293b !important; }
-    html.dark .hover\:bg-slate-100:hover, body.dark .hover\:bg-slate-100:hover { background: #334155 !important; }
-    html.dark input, html.dark select, html.dark textarea { background: #1e293b !important; color: #f8fafc !important; border-color: #334155 !important; }
-    html.dark table thead th { background: #1e293b !important; color: #94a3b8 !important; }
-  </style>
+    .layout { display: grid; grid-template-columns: 236px minmax(0, 1fr); height: 100vh; overflow: hidden; }
+    .sidebar {
+      background: #ffffff; border-right: 1px solid var(--line); padding: 22px 14px 16px;
+      height: 100vh; display: flex; flex-direction: column; overflow-y: auto; z-index: 30;
+    }
+    .brand-row { display: flex; align-items: center; justify-content: space-between; padding: 0 8px 18px; min-height: 34px; }
+    .brand-row .brand { display: flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 700; letter-spacing: -0.4px; color: var(--ink); flex: 1; min-width: 0; }
+    .suite-icon-container { width: 28px; height: 28px; border-radius: 8px; background: #eee9fb; color: var(--purple); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .suite-icon-container .suite-expand-icon { display: none !important; font-size: 14px; color: var(--purple); }
+    .sidebar-collapse-btn { background: transparent; border: 1px solid transparent; cursor: pointer; padding: 5px 7px; border-radius: 6px; color: var(--muted); display: inline-flex; align-items: center; justify-content: center; font-size: 12px; }
+    .sidebar-collapse-btn:hover { background: var(--soft); color: var(--purple); border-color: #cfc7f4; }
 
-  <style data-collapsible-sidebar>
-    /* Collapsible Suite Sidebar Styles */
-    .brand-icon-wrap {
-      position: relative;
-      width: 32px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 8px;
-      cursor: pointer;
-      background: #eeeaff;
-      color: #6854df;
-      transition: background 0.2s;
+    .appbox { padding: 11px 12px; background: #f6f4fc; border: 1px solid #ebe6f8; border-radius: 10px; margin: 0 0 16px; display: flex; gap: 10px; align-items: center; }
+    .appicon { width: 34px; height: 34px; border-radius: 8px; display: grid; place-items: center; background: #e9e3ff; color: var(--purple); flex-shrink: 0; }
+    .appbox b { display: block; font-size: 13px; color: var(--ink); line-height: 1.25; }
+    .appbox small { color: var(--muted); font-size: 11px; display: block; }
+
+    .nav { display: flex; flex-direction: column; gap: 2px; }
+    .navlabel { font-size: 10px; text-transform: uppercase; letter-spacing: 1.4px; font-weight: 700; color: #9ba3b2; margin: 16px 10px 6px; }
+    .nav a, .nav a:link, .nav a:visited {
+      display: flex; align-items: center; gap: 11px; padding: 9px 11px; font-size: 13px;
+      color: #67728a !important; border-radius: 8px; font-weight: 500;
     }
-    .brand-icon-wrap:hover {
-      background: #e0d7fe;
+    .nav a:hover { background: #f8f7fc; color: #172137 !important; }
+    .nav a.active { background: #ede9fb !important; color: #6650ce !important; font-weight: 650; }
+    .nav a .icon { width: 18px; text-align: center; font-size: 14px; color: inherit; flex-shrink: 0; }
+
+    .side-bottom { margin-top: auto; padding-top: 18px; }
+    .profile-link { border-top: 1px solid var(--line); padding: 14px 6px 0; display: flex; align-items: center; gap: 10px; }
+    .avatar-badge { width: 34px; height: 34px; border-radius: 50%; background: #eee8fb; color: #6854df; display: inline-grid; place-items: center; font-size: 11px; font-weight: 700; flex-shrink: 0; }
+
+    /* Collapsed sidebar state */
+    .layout.sidebar-collapsed { grid-template-columns: 68px minmax(0, 1fr) !important; }
+    aside.sidebar-collapsed, .sidebar.sidebar-collapsed, aside[data-collapsed="true"] {
+      width: 68px !important; min-width: 68px !important; max-width: 68px !important; padding-left: 8px !important; padding-right: 8px !important;
     }
-    .brand-icon-wrap .expand-hint {
-      display: none;
-      position: absolute;
-      inset: 0;
-      align-items: center;
-      justify-content: center;
-      background: #6854df;
-      color: #ffffff;
-      border-radius: 8px;
-    }
-    aside.collapsed:hover .brand-icon-wrap .expand-hint,
-    aside.sidebar-collapsed:hover .brand-icon-wrap .expand-hint {
-      display: flex !important;
-      animation: pulse-caret 1.2s infinite ease-in-out;
-    }
-    aside.collapsed:hover .brand-icon-wrap #suiteIcon,
-    aside.sidebar-collapsed:hover .brand-icon-wrap #suiteIcon {
+    aside.collapsed .sidebar-label, aside[data-collapsed="true"] .sidebar-label, .sidebar-collapsed .sidebar-label,
+    .sidebar-collapsed .suite-title, .sidebar-collapsed .sidebar-collapse-btn, .sidebar-collapsed .navlabel,
+    .sidebar-collapsed .appbox > div:not(.appicon), .sidebar-collapsed .profile-link > div:not(.avatar-badge) {
       display: none !important;
     }
-    @keyframes pulse-caret {
-      0%, 100% { transform: translateX(0); }
-      50% { transform: translateX(2px); }
-    }
-    aside.collapsed, aside.sidebar-collapsed {
-      width: 68px !important;
-    }
-    aside.collapsed .nav-text,
-    aside.collapsed .sidebar-title,
-    aside.collapsed .sidebar-section-title,
-    aside.collapsed .sidebar-user-info,
-    aside.collapsed .suite-badge,
-    aside.sidebar-collapsed .nav-text,
-    aside.sidebar-collapsed .sidebar-title,
-    aside.sidebar-collapsed .sidebar-section-title,
-    aside.sidebar-collapsed .sidebar-user-info,
-    aside.sidebar-collapsed .suite-badge {
-      display: none !important;
-    }
-    aside.collapsed .nav-item,
-    aside.sidebar-collapsed .nav-item {
-      justify-content: center !important;
-      padding-left: 0 !important;
-      padding-right: 0 !important;
-    }
-    aside.collapsed .section-header,
-    aside.sidebar-collapsed .section-header {
-      text-align: center;
-      padding: 4px 0;
-    }
-    aside.collapsed .section-divider,
-    aside.sidebar-collapsed .section-divider {
-      display: block;
-      margin: 8px auto;
-      width: 24px;
-      border-top: 1px solid #e2e8f0;
-    }
+    .sidebar-collapsed .brand-row { justify-content: center !important; padding: 0 0 16px 0 !important; }
+    .sidebar-collapsed .brand-row .brand { justify-content: center !important; flex: none !important; cursor: pointer; gap: 0 !important; }
+    .sidebar.sidebar-collapsed:hover .suite-icon-container .suite-icon { display: none !important; }
+    .sidebar.sidebar-collapsed:hover .suite-icon-container .suite-expand-icon { display: inline-block !important; }
+    .sidebar-collapsed .appbox, .sidebar-collapsed .nav a, .sidebar-collapsed .profile-link { justify-content: center !important; padding-left: 8px !important; padding-right: 8px !important; }
 
-    /* Standardized Navigation Colors (No saturated primary blue) */
-    .sidebar .nav-item {
-      color: #67728a !important;
-      text-decoration: none;
+    /* Main Content & Topbar */
+    .main-col { display: flex; flex-direction: column; height: 100vh; overflow: hidden; min-width: 0; }
+    .topbar {
+      height: 64px; flex-shrink: 0; border-bottom: 1px solid var(--line); background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: space-between;
+      padding: 0 28px; gap: 14px; position: sticky; top: 0; z-index: 25;
     }
-    .sidebar .nav-item:hover {
-      background: #f8fafc !important;
-      color: #1e293b !important;
-    }
-    .sidebar .nav-item.active {
-      background: #f3f0ff !important;
-      color: #53389e !important;
-      font-weight: 600 !important;
-    }
-    .sidebar .nav-item i {
-      color: #67728a;
-    }
-    .sidebar .nav-item.active i {
-      color: #53389e !important;
-    }
+    .breadcrumbs { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 12px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .breadcrumbs strong { color: var(--ink); font-weight: 600; }
+    .page-scroll { flex: 1; overflow-y: auto; padding: 26px 30px 44px; }
+    .page-wrap { max-width: 1520px; margin: 0 auto; }
 
-    /* Mobile Responsive Sidebar & Top Navigation Standard */
-    .mobile-menu {
-      display: none;
-      align-items: center;
-      justify-content: center;
-      width: 34px;
-      height: 34px;
-      border-radius: 8px;
-      background: transparent;
-      border: 1px solid rgba(0,0,0,0.08);
-      color: #67728a;
-      cursor: pointer;
-      flex-shrink: 0;
-    }
-    .mobile-menu:hover {
-      background: #f8fafc;
-      color: #1e293b;
-    }
-    .shade {
-      display: none;
-    }
+    .eyebrow { font-size: 11px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--purple); font-weight: 700; margin-bottom: 6px; display: flex; align-items: center; gap: 7px; }
+    .page-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 18px; margin-bottom: 22px; flex-wrap: wrap; }
+    .page-head h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.6px; margin: 0 0 6px; color: var(--ink); }
+    .page-head p { color: var(--muted); font-size: 13px; margin: 0; max-width: 780px; }
 
+    .kpi-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-bottom: 22px; }
+    .kpi-card { background: #ffffff; border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; display: flex; flex-direction: column; gap: 6px; }
+    .kpi-card .kicker { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: var(--muted); display: flex; align-items: center; justify-content: space-between; }
+    .kpi-card .val { font-size: 27px; font-weight: 750; letter-spacing: -0.8px; color: var(--ink); line-height: 1.15; }
+    .kpi-card .sub { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 6px; margin-top: 2px; flex-wrap: wrap; }
+
+    .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-bottom: 20px; }
+    .panel { background: #ffffff; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; margin-bottom: 20px; }
+    .panel-head, .panel-header { padding: 16px 20px; border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .panel-head h2, .panel-header h2 { font-size: 15px; font-weight: 700; margin: 0; color: var(--ink); }
+    .panel-head p, .panel-header p { font-size: 12px; color: var(--muted); margin: 2px 0 0; }
+    .panel-body { padding: 20px; }
+
+    .filter-bar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 14px 20px; border-bottom: 1px solid var(--line); background: #fafbfe; }
+    .search-input, .form-input, .form-select, .form-textarea { flex: 1; min-width: 180px; padding: 8px 12px; border: 1px solid #dfe3ed; border-radius: 8px; font-size: 13px; background: #fff; color: var(--ink); width: 100%; }
+    .search-wrap .search-input { padding-left: 34px; }
+    .search-wrap { position: relative; flex: 1; min-width: 220px; }
+    .search-wrap i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 12px; }
+    .select-filter { padding: 8px 12px; border: 1px solid #dfe3ed; border-radius: 8px; font-size: 13px; background: #fff; color: var(--ink); }
+    .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-label { font-size: 12px; font-weight: 600; color: var(--ink); }
+    .form-textarea { min-height: 90px; resize: vertical; }
+
+    .active-tags-bar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding: 10px 20px; background: #f6f4fc; border-bottom: 1px solid #ebe6f8; font-size: 12px; }
+    .filter-chip { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; background: #ffffff; border: 1px solid #d8d0f8; color: #5340b8; font-weight: 600; font-size: 11px; white-space: nowrap; }
+    .filter-chip button { border: 0; background: transparent; color: #6854df; cursor: pointer; padding: 0 2px; font-weight: 700; }
+
+    table.data-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; }
+    table.data-table th { padding: 11px 16px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); background: #f8f9fc; border-bottom: 1px solid var(--line); white-space: nowrap; }
+    table.data-table td { padding: 13px 16px; border-bottom: 1px solid #eff1f6; vertical-align: middle; }
+    table.data-table tr:hover td { background: #fcfbff; }
+    .primary-link { font-weight: 700; color: var(--purple); text-decoration: none; }
+    .primary-link:hover { text-decoration: underline; }
+
+    .badge { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 999px; font-size: 11px; font-weight: 650; white-space: nowrap; flex-shrink: 0; }
+    .badge.green { background: #e6f6f0; color: #146c52; }
+    .badge.purple { background: #eee9fb; color: #5b45c4; }
+    .badge.amber { background: #fef3c7; color: #9a580a; }
+    .badge.red { background: #fee2e2; color: #991b1b; }
+    .badge.slate { background: #f1f5f9; color: #475569; }
+    .badge.blue { background: #e0f2fe; color: #0369a1; }
+
+    .floor-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; }
+    .table-tile { border: 1px solid var(--line); border-radius: 12px; padding: 14px; background: #fff; display: flex; flex-direction: column; gap: 8px; }
+    .tile-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+    .tile-num { font-weight: 700; font-size: 14px; }
+    .tile-meta { font-size: 11px; color: var(--muted); }
+
+    .kanban-board { display: grid; grid-template-columns: repeat(4, minmax(230px, 1fr)); gap: 14px; overflow-x: auto; }
+    .kanban-col { background: #f8f9fc; border: 1px solid var(--line); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+    .kanban-col-head { display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 700; color: var(--ink); padding-bottom: 6px; border-bottom: 1px solid var(--line); }
+    .kanban-card { background: #ffffff; border: 1px solid var(--line); border-radius: 10px; padding: 12px; font-size: 12px; box-shadow: 0 2px 5px rgba(15,23,42,0.03); }
+    .kanban-card p { margin: 6px 0; color: var(--muted); font-size: 12px; }
+    .card-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--line); font-size: 11px; color: var(--muted); }
+
+    .drawer-backdrop { display: flex; justify-content: center; padding: 10px 0; }
+    .drawer-card { background: #ffffff; border: 1px solid var(--line); border-radius: var(--radius); width: 100%; max-width: 820px; overflow: hidden; box-shadow: 0 12px 32px rgba(15,23,42,0.08); }
+    .drawer-head { padding: 18px 22px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; }
+    .drawer-body { padding: 22px; }
+    .drawer-foot { padding: 16px 22px; border-top: 1px solid var(--line); display: flex; justify-content: flex-end; gap: 10px; background: #fafbfe; }
+
+    .mobile-menu { display: none; background: transparent; border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; cursor: pointer; }
+    .shade { display: none; }
+
+    @media (max-width: 1024px) {
+      .kpi-grid, .grid-2, .form-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
     @media (max-width: 768px) {
-      .mobile-menu {
-        display: inline-flex !important;
-      }
-      body {
-        flex-direction: column !important;
-      }
-      aside.sidebar, aside#suiteSidebar, aside {
-        position: fixed !important;
-        left: 0 !important;
-        top: 0 !important;
-        bottom: 0 !important;
-        height: 100vh !important;
-        height: 100dvh !important;
-        width: 260px !important;
-        min-width: 260px !important;
-        max-width: 260px !important;
-        transform: translateX(-100%) !important;
-        transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
-        z-index: 50 !important;
-        background: #ffffff !important;
-        box-shadow: none !important;
-      }
-      body.dark aside.sidebar, html.dark aside.sidebar,
-      body.dark aside#suiteSidebar, html.dark aside#suiteSidebar {
-        background: #0f172a !important;
-      }
-      .navopen aside.sidebar, body.navopen aside.sidebar, html.navopen aside.sidebar,
-      .navopen aside#suiteSidebar, body.navopen aside#suiteSidebar, html.navopen aside#suiteSidebar {
-        transform: translateX(0) !important;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.2) !important;
-      }
-      .navopen .shade, body.navopen .shade, html.navopen .shade {
-        display: block !important;
-        position: fixed !important;
-        inset: 0 !important;
-        background: rgba(15, 23, 42, 0.5) !important;
-        backdrop-filter: blur(2px) !important;
-        z-index: 45 !important;
-      }
-      #collapseBtn, .sidebar-collapse-btn {
-        display: none !important;
-      }
+      .layout { display: block; }
+      .sidebar { position: fixed; left: 0; top: 0; transform: translateX(-100%); width: 250px !important; transition: transform 0.2s ease; z-index: 60; }
+      body.navopen .sidebar { transform: translateX(0); }
+      body.navopen .shade { display: block; position: fixed; inset: 0; background: rgba(15,23,42,0.45); z-index: 55; }
+      .mobile-menu { display: inline-flex; align-items: center; justify-content: center; }
+      .kpi-grid, .grid-2, .form-grid { grid-template-columns: 1fr; }
     }
+
+    html.dark, body.dark { --ink: #f1f5f9; --muted: #94a3b8; --line: #263044; --bg: #0f172a; --panel: #1e293b; --purple-soft: #1e1b4b; background: #0f172a !important; color: #f1f5f9 !important; }
+    html.dark .sidebar, body.dark .sidebar, html.dark .topbar, body.dark .topbar, html.dark .panel, body.dark .panel, html.dark .kpi-card, body.dark .kpi-card, html.dark .table-tile, body.dark .table-tile, html.dark .kanban-card, body.dark .kanban-card, html.dark .drawer-card, body.dark .drawer-card { background: #1e293b !important; color: #f1f5f9 !important; border-color: #334155 !important; }
+    html.dark .appbox, body.dark .appbox, html.dark .filter-bar, body.dark .filter-bar, html.dark table.data-table th, body.dark table.data-table th, html.dark .kanban-col, body.dark .kanban-col, html.dark .drawer-foot, body.dark .drawer-foot { background: #0f172a !important; color: #cbd5e1 !important; border-color: #334155 !important; }
+    html.dark input, body.dark input, html.dark select, body.dark select, html.dark textarea, body.dark textarea { background: #0f172a !important; color: #f1f5f9 !important; border-color: #334155 !important; }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-900 font-sans antialiased min-h-screen flex">
-
-
-    <!-- Collapsible Left Sidebar -->
-    <aside id="suiteSidebar" class="sidebar w-64 bg-white border-r border-slate-200 flex flex-col justify-between shrink-0 transition-all duration-300 z-30 select-none" data-collapsible-sidebar="true">
-      <div>
-        <!-- Top Brand Header with Suite Icon & Collapse Toggle -->
-        <div class="h-16 border-b border-slate-200 flex items-center justify-between px-4">
-          <div class="flex items-center gap-3 overflow-hidden">
-            <div id="brandIconWrap" class="brand-icon-wrap" onclick="toggleSidebar()" title="Click to collapse / expand">
-              <i id="suiteIcon" class="fas fa-chart-pie text-indigo-600 text-lg"></i>
-              <div class="expand-hint">
-                <i class="fas fa-chevron-right text-xs"></i>
-              </div>
-            </div>
-            <div class="sidebar-title truncate">
-              <span class="block text-xs font-semibold uppercase tracking-wider text-indigo-600">Data &amp; Analytics Suite</span>
-              <span class="block text-sm font-bold text-slate-900 leading-tight">Product Analytics</span>
-            </div>
-          </div>
-          <button id="collapseBtn" onclick="toggleSidebar()" class="text-slate-400 hover:text-slate-600 p-1.5 rounded-lg hover:bg-slate-100 transition-colors" title="Collapse sidebar">
-            <i class="fas fa-chevron-left text-sm"></i>
-          </button>
-        </div>
-
-        <!-- Navigation Sections -->
-        <nav class="py-2">
-          
-        <div class="px-4 mt-4">
-          <p class="sidebar-section-title text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-2 mb-2">Product Insights</p>
-          <div class="section-divider hidden"></div>
-          <div class="space-y-1">
-      
-          <a href="#/product-overview" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-[#67728a] hover:bg-slate-100 hover:text-slate-900">
-            <i class="fas fa-layer-group text-base w-5 text-center text-[#67728a]"></i>
-            <span class="nav-text sidebar-label">Engagement Pulse Hub</span>
-          </a>
-        
-          <a href="#/funnels" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-[#67728a] hover:bg-slate-100 hover:text-slate-900">
-            <i class="fas fa-table-columns text-base w-5 text-center text-[#67728a]"></i>
-            <span class="nav-text sidebar-label">Conversion Funnels</span>
-          </a>
-        
-          <a href="#/retention-cohorts" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-[#67728a] hover:bg-slate-100 hover:text-slate-900">
-            <i class="fas fa-chart-line text-base w-5 text-center text-[#67728a]"></i>
-            <span class="nav-text sidebar-label">Retention &amp; Lifecycle</span>
-          </a>
-        
-          <a href="#/user-paths" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-[#67728a] hover:bg-slate-100 hover:text-slate-900">
-            <i class="fas fa-compass text-base w-5 text-center text-[#67728a]"></i>
-            <span class="nav-text sidebar-label">User Flows &amp; Journeys</span>
-          </a>
-        
-          </div>
-        </div>
-      
-        <div class="px-4 mt-6">
-          <p class="sidebar-section-title text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-2 mb-2">Cohorts &amp; Experiments</p>
-          <div class="section-divider hidden"></div>
-          <div class="space-y-1">
-      
-          <a href="#/behavioral-segments" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors active bg-[#f3f0ff] !bg-[#f3f0ff] text-[#53389e] !text-[#53389e] font-semibold">
-            <i class="fas fa-bolt text-base w-5 text-center text-[#53389e]"></i>
-            <span class="nav-text sidebar-label">Behavioral Cohorts</span>
-          </a>
-        
-          <a href="#/feature-adoption" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-[#67728a] hover:bg-slate-100 hover:text-slate-900">
-            <i class="fas fa-shield-halved text-base w-5 text-center text-[#67728a]"></i>
-            <span class="nav-text sidebar-label">Feature Adoption Matrix</span>
-          </a>
-        
-          <a href="#/experiment-impact" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-[#67728a] hover:bg-slate-100 hover:text-slate-900">
-            <i class="fas fa-sliders text-base w-5 text-center text-[#67728a]"></i>
-            <span class="nav-text sidebar-label">Experiment Readouts</span>
-          </a>
-        
-          </div>
-        </div>
-      
-        <div class="px-4 mt-6">
-          <p class="sidebar-section-title text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-2 mb-2">Data &amp; Governance</p>
-          <div class="section-divider hidden"></div>
-          <div class="space-y-1">
-      
-          <a href="#/event-lexicon" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-[#67728a] hover:bg-slate-100 hover:text-slate-900">
-            <i class="fas fa-clipboard-check text-base w-5 text-center text-[#67728a]"></i>
-            <span class="nav-text sidebar-label">Event Lexicon &amp; Schema</span>
-          </a>
-        
-          <a href="#/live-event-stream" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-[#67728a] hover:bg-slate-100 hover:text-slate-900">
-            <i class="fas fa-diagram-project text-base w-5 text-center text-[#67728a]"></i>
-            <span class="nav-text sidebar-label">Live Telemetry Debugger</span>
-          </a>
-        
-          <a href="#/telemetry-sources" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-[#67728a] hover:bg-slate-100 hover:text-slate-900">
-            <i class="fas fa-bell text-base w-5 text-center text-[#67728a]"></i>
-            <span class="nav-text sidebar-label">SDK Sources &amp; Privacy</span>
-          </a>
-        
-          </div>
-        </div>
-      
-        </nav>
+<body>
+  <div class="shade" id="mobileShade"></div>
+  <div class="layout" id="appLayout">
+    <aside class="sidebar" id="appSidebar" aria-label="Rapider Product Analytics navigation">
+      <div class="brand-row">
+        <a class="brand" href="#/product-overview" id="suiteBrandLink" title="Data &amp; Analytics Suite">
+          <span class="suite-icon-container">
+            <i class="suite-icon fas fa-chart-bar" aria-hidden="true"></i>
+            <i class="suite-expand-icon fas fa-chevron-right" aria-hidden="true"></i>
+          </span>
+          <span class="suite-title sidebar-label">Data &amp; Analytics Suite</span>
+        </a>
+        <button type="button" class="sidebar-collapse-btn" id="sidebarCollapseBtn" aria-label="Collapse sidebar" title="Collapse sidebar">
+          <i class="fas fa-chevron-left" aria-hidden="true"></i>
+        </button>
       </div>
 
-      <!-- Bottom User / Org Card -->
-      <div class="p-4 border-t border-slate-200">
-        <div class="flex items-center gap-3 overflow-hidden">
-          <div class="w-9 h-9 rounded-full bg-indigo-100 text-indigo-600 font-semibold flex items-center justify-center shrink-0 text-sm">
-            DA
-          </div>
-          <div class="sidebar-user-info truncate">
-            <p class="text-xs font-semibold text-slate-800 truncate">Elena Rostova</p>
-            <p class="text-[11px] text-slate-500 truncate">Chief Data Architect</p>
+      <a class="appbox" href="#/product-overview">
+        <div class="appicon"><i class="fas fa-chart-bar" aria-hidden="true"></i></div>
+        <div class="sidebar-label">
+          <b>Product Analytics</b>
+          <small>Rapider Data &amp; Analytics Suite</small>
+        </div>
+      </a>
+
+      <nav class="nav" aria-label="Primary">
+      <div class="navlabel">Product Insights</div>
+        <a href="#/product-overview" class="nav-link" data-route="product-overview" title="Engagement Pulse Hub">
+          <i class="fas fa-chart-bar icon" aria-hidden="true"></i>
+          <span class="sidebar-label">Engagement Pulse Hub</span>
+        </a>
+        <a href="#/funnels" class="nav-link" data-route="funnels" title="Conversion Funnels">
+          <i class="fas fa-chart-bar icon" aria-hidden="true"></i>
+          <span class="sidebar-label">Conversion Funnels</span>
+        </a>
+        <a href="#/retention-cohorts" class="nav-link" data-route="retention-cohorts" title="Retention &amp; Lifecycle">
+          <i class="fas fa-chart-bar icon" aria-hidden="true"></i>
+          <span class="sidebar-label">Retention &amp; Lifecycle</span>
+        </a>
+        <a href="#/user-paths" class="nav-link" data-route="user-paths" title="User Flows &amp; Journeys">
+          <i class="fas fa-chart-bar icon" aria-hidden="true"></i>
+          <span class="sidebar-label">User Flows &amp; Journeys</span>
+        </a>
+      <div class="navlabel">Cohorts &amp; Experiments</div>
+        <a href="#/behavioral-segments" class="nav-link active" data-route="behavioral-segments" title="Behavioral Cohorts">
+          <i class="fas fa-chart-bar icon" aria-hidden="true"></i>
+          <span class="sidebar-label">Behavioral Cohorts</span>
+        </a>
+        <a href="#/feature-adoption" class="nav-link" data-route="feature-adoption" title="Feature Adoption Matrix">
+          <i class="fas fa-chart-bar icon" aria-hidden="true"></i>
+          <span class="sidebar-label">Feature Adoption Matrix</span>
+        </a>
+        <a href="#/experiment-impact" class="nav-link" data-route="experiment-impact" title="Experiment Readouts">
+          <i class="fas fa-chart-bar icon" aria-hidden="true"></i>
+          <span class="sidebar-label">Experiment Readouts</span>
+        </a>
+      <div class="navlabel">Data &amp; Governance</div>
+        <a href="#/event-lexicon" class="nav-link" data-route="event-lexicon" title="Event Lexicon &amp; Schema">
+          <i class="fas fa-chart-bar icon" aria-hidden="true"></i>
+          <span class="sidebar-label">Event Lexicon &amp; Schema</span>
+        </a>
+        <a href="#/live-event-stream" class="nav-link" data-route="live-event-stream" title="Live Telemetry Debugger">
+          <i class="fas fa-chart-bar icon" aria-hidden="true"></i>
+          <span class="sidebar-label">Live Telemetry Debugger</span>
+        </a>
+        <a href="#/telemetry-sources" class="nav-link" data-route="telemetry-sources" title="SDK Sources &amp; Privacy">
+          <i class="fas fa-chart-bar icon" aria-hidden="true"></i>
+          <span class="sidebar-label">SDK Sources &amp; Privacy</span>
+        </a>
+      </nav>
+
+      <div class="side-bottom">
+        <div class="profile-link">
+          <div class="avatar-badge">EV</div>
+          <div class="sidebar-label">
+            <strong style="font-size:12px;display:block">Elena Vance</strong>
+            <small style="font-size:11px;color:var(--muted)">Product Manager / Analyst</small>
           </div>
         </div>
       </div>
     </aside>
-    <div class="shade" id="sidebar-shade"></div>
-    
-<div class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
-  
-    <!-- Responsive Main Header (h-16 standard) -->
-    <header class="h-16 bg-white border-b border-slate-200 px-6 flex items-center justify-between shrink-0">
-      <div class="flex items-center gap-3">
-        <button type="button" class="mobile-menu" data-action="menu" aria-label="Open navigation" aria-expanded="false" title="Open navigation">
-          <i class="fas fa-bars"></i>
-        </button>
-        <nav class="text-xs flex items-center gap-1.5">
-          <a href="#/product-overview" class="hover:text-indigo-600 text-slate-500">Data &amp; Analytics Suite</a>
-          <span class="text-slate-400">/</span>
-          <a href="#/product-overview" class="hover:text-indigo-600 text-slate-500">Product Analytics</a>
-          <span class="text-slate-400">/</span>
-          <span class="text-slate-900 font-medium">Behavioral Cohorts</span>
-        </nav>
-      </div>
-      <div class="flex items-center gap-3">
-        <button onclick="window.rapiderApi.navigate('/segment-funnel-drawer')" class="btn-primary flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-sm font-medium transition-colors shadow-sm" style="color: #ffffff !important;">
-          <i class="fas fa-plus"></i>
-          <span>New Record</span>
-        </button>
-        <button onclick="toggleDarkMode()" class="text-slate-500 hover:text-slate-700 p-2 rounded-lg hover:bg-slate-100 transition-colors" title="Toggle Theme">
-          <i class="fas fa-moon text-sm"></i>
-        </button>
-      </div>
-    </header>
-    
-  <main class="flex-1 overflow-y-auto p-6 bg-slate-50 dark:bg-slate-900" id="main-content">
-    
-    <div class="max-w-7xl mx-auto space-y-6">
-      <!-- Page Title & Action Bar -->
-      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div>
-          <span class="text-xs font-semibold uppercase tracking-wider text-indigo-600">Cohorts &amp; Experiments &bull; Funnel Definition</span>
-          <h1 class="text-2xl font-bold text-slate-900 dark:text-white mt-0.5">Behavioral Cohorts</h1>
-          <p class="text-sm text-slate-500 mt-0.5">Dynamic DatBehavioralSegment catalog with live user/account counts, CrmAccount health breakdown, and MKT/CRM sync status pills.</p>
+
+    <div class="main-col">
+      <header class="topbar h-16 sticky top-0 z-30 flex items-center justify-between px-6 border-b border-border-color bg-background/95 backdrop-blur">
+        <div class="flex items-center gap-3 min-w-0">
+          <button type="button" class="mobile-menu" id="mobileMenuBtn" aria-label="Open menu">
+            <i class="fas fa-bars" aria-hidden="true"></i>
+          </button>
+          <div class="breadcrumbs">
+            <span>Data &amp; Analytics Suite</span>
+            <span>/</span>
+            <span>Product Analytics</span>
+            <span>/</span>
+            <strong>Behavioral Cohorts</strong>
+          </div>
         </div>
         <div class="flex items-center gap-2">
-          <a href="#/segment-funnel-drawer" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-sm font-medium transition-colors shadow-sm" style="color: #ffffff !important;">
-            <i class="fas fa-plus"></i>
-            <span>Create Funnel Definition</span>
-          </a>
-        </div>
-      </div>
-
-      <!-- KPI Summary Cards -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-semibold text-slate-500 uppercase">Total Funnel Definitions</span>
-            <i class="fas fa-database text-indigo-500"></i>
-          </div>
-          <p id="kpiTotalCount" class="text-2xl font-bold text-slate-900 dark:text-white mt-2">3</p>
-          <span class="text-xs text-emerald-600 font-medium">Live SWR synchronized</span>
-        </div>
-        <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-semibold text-slate-500 uppercase">Active Records</span>
-            <i class="fas fa-circle-check text-emerald-500"></i>
-          </div>
-          <p class="text-2xl font-bold text-slate-900 dark:text-white mt-2">2</p>
-          <span class="text-xs text-slate-500 font-medium">Passing policy checks</span>
-        </div>
-        <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-semibold text-slate-500 uppercase">Compliance Rate</span>
-            <i class="fas fa-shield-halved text-purple-500"></i>
-          </div>
-          <p class="text-2xl font-bold text-slate-900 dark:text-white mt-2">99.4%</p>
-          <span class="text-xs text-purple-600 font-medium">Audit trail verified</span>
-        </div>
-        <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-semibold text-slate-500 uppercase">Avg Latency</span>
-            <i class="fas fa-bolt text-amber-500"></i>
-          </div>
-          <p class="text-2xl font-bold text-slate-900 dark:text-white mt-2">42 ms</p>
-          <span class="text-xs text-slate-500 font-medium">Sub-200ms target SLA</span>
-        </div>
-      </div>
-
-      <!-- Search & Filter Bar -->
-      <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-3">
-        <div class="flex flex-col sm:flex-row items-center gap-3">
-          <div class="relative flex-1 w-full">
-            <i class="fas fa-search absolute left-3 top-3 text-slate-400 text-sm"></i>
-            <input type="text" id="recordSearchInput" placeholder="Search Funnel Definition by title, code, or status..." class="w-full pl-9 pr-4 py-2 border border-slate-200 dark:border-slate-600 rounded-lg text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-indigo-500" />
-          </div>
-          <select id="statusFilterSelect" class="w-full sm:w-48 px-3 py-2 border border-slate-200 dark:border-slate-600 rounded-lg text-sm bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200">
-            <option value="">All Statuses</option>
-            <option value="ACTIVE">ACTIVE</option>
-            <option value="IN_PROGRESS">IN_PROGRESS</option>
-            <option value="COMPLETED">COMPLETED</option>
-          </select>
-          <button id="clearFiltersBtn" type="button" onclick="clearAllFilters()" class="px-3.5 py-2 text-xs font-semibold text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-600 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors whitespace-nowrap">
-            Clear all
+          <a href="#/segment-funnel-drawer" class="btn small"><i class="fas fa-plus" aria-hidden="true"></i> + Quick Action</a>
+          <a href="#/segment-funnel-drawer" class="btn primary small !text-white text-white" style="color: #ffffff !important;"><i class="fas fa-plus-circle" aria-hidden="true"></i> + New Telemetry Source</a>
+          <button type="button" class="btn small" id="themeToggleBtn" aria-label="Toggle dark mode" title="Toggle theme">
+            <i class="fas fa-moon" aria-hidden="true"></i>
           </button>
         </div>
-        <div id="activeFilterTagsBar" class="flex flex-wrap items-center gap-2 text-xs">
-          <span class="text-slate-400">Active Filters:</span>
-          <span class="px-2 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 font-medium">All Funnel Definition Records</span>
+      </header>
+
+      <main class="page-scroll flex-1 overflow-y-auto p-6 md:p-8 @container" id="main-content">
+        <div class="page-wrap">
+
+      <div class="eyebrow"><i class="fas fa-chart-bar"></i> COHORTS &amp; EXPERIMENTS &bull; DATBEHAVIORALSEGMENT WORKBENCH</div>
+      <div class="page-head">
+        <div>
+          <h1>Behavioral Cohorts</h1>
+          <p>Dynamic DatBehavioralSegment catalog with live user/account counts, CrmAccount health breakdown, and MKT/CRM sync status pills.</p>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button type="button" class="btn" onclick="window.toast('Verified SOW invariants & cross-suite sync for DatBehavioralSegment.', 'success')"><i class="fas fa-sync"></i> Verify Behavioral Segment Sync</button>
+          <a href="#/segment-funnel-drawer" class="btn primary !text-white text-white" style="color:#ffffff !important;"><i class="fas fa-plus"></i> + Create Behavioral Segment</a>
         </div>
       </div>
 
-      <!-- Data Table -->
-      <div class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden shadow-sm">
-        <div class="overflow-x-auto">
-          <table class="w-full text-left border-collapse text-sm">
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kicker"><span>ACTIVE BEHAVIORAL SEGMENT RECORDS</span><i class="fas fa-database" style="color:var(--purple)"></i></div>
+          <div class="val" id="ledgerCount_4">5 Records</div>
+          <div class="sub"><span>Bound to canonical `DatBehavioralSegment`</span></div>
+        </div>
+        <div class="kpi-card">
+          <div class="kicker"><span>ENTITY SCOPE COVERAGE</span><i class="fas fa-check-double" style="color:#10b981"></i></div>
+          <div class="val">100% Verified</div>
+          <div class="sub"><span class="badge green">USER / B2B_ACCOUNT</span></div>
+        </div>
+        <div class="kpi-card">
+          <div class="kicker"><span>CRITERIA AST JSON</span><i class="fas fa-Sliders-h" style="color:#0284c7"></i></div>
+          <div class="val">97.8%</div>
+          <div class="sub"><span>code unique. Dynamic segments recompute incrementally and em</span></div>
+        </div>
+        <div class="kpi-card">
+          <div class="kicker"><span>CROSS-SUITE INTEGRATION</span><i class="fas fa-shield-alt" style="color:#f59e0b"></i></div>
+          <div class="val">Enforced</div>
+          <div class="sub"><span>Emits membership deltas referencing CrmContact.id / CrmAcc</span></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="filter-bar">
+          <div class="search-wrap">
+            <i class="fas fa-search"></i>
+            <input type="text" id="ledgerSearch_4" class="search-input" placeholder="Search Behavioral Cohorts by code, title, entity scope, or owner...">
+          </div>
+          <select id="ledgerStatus_4" class="select-filter" aria-label="Filter by Status">
+            <option value="ALL">All Behavioral Segment Statuses</option>
+            <option value="USER">USER</option><option value="B2B_ACCOUNT">B2B_ACCOUNT</option>
+          </select>
+        </div>
+        <div id="activeFilterTagsBar" class="active-tags-bar" style="display:none;"></div>
+        <div style="overflow-x:auto;">
+          <table class="data-table">
             <thead>
-              <tr class="bg-slate-50 dark:bg-slate-700/50 text-slate-500 dark:text-slate-400 text-xs font-semibold uppercase">
-                <th class="p-4">Funnel Definition Identifier</th>
-                <th class="p-4">Metadata / Code</th>
-                <th class="p-4">Status</th>
-                <th class="p-4 text-right">Actions</th>
+              <tr>
+                <th>Code &amp; Timestamp</th>
+                <th>Behavioral Segment Title &amp; Operational Scope</th>
+                <th>Entity Scope</th>
+                <th>Criteria Ast Json</th>
+                <th>Owner &amp; Cross-Suite Ref</th>
+                <th>Status</th>
+                <th>Actions</th>
               </tr>
             </thead>
-            <tbody id="recordsTableBody" class="divide-y divide-slate-100 dark:divide-slate-700">
-              <!-- Rendered dynamically -->
-            </tbody>
+            <tbody id="ledgerRows_4"></tbody>
           </table>
         </div>
-        <div id="recordsEmptyState" class="hidden text-center py-12 p-6">
-          <i class="fas fa-folder-open text-slate-300 dark:text-slate-600 text-4xl mb-3"></i>
-          <h3 class="text-base font-semibold text-slate-800 dark:text-slate-200">No matching records found</h3>
-          <p class="text-xs text-slate-500 mt-1">Try adjusting your search query or clearing active filters.</p>
-          <button type="button" onclick="clearAllFilters()" class="mt-4 px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-xs font-semibold text-white" style="color: #ffffff !important;">
-            Reset Filters
-          </button>
+      </div>
+    
         </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Confirmation Modal (Zero Native Dialog Standard) -->
+  <div id="rapiderConfirmModal" class="hidden" style="position:fixed;inset:0;background:rgba(15,23,42,0.5);z-index:100;display:none;align-items:center;justify-content:center;padding:16px;">
+    <div class="panel" style="max-width:420px;width:100%;padding:22px;box-shadow:0 20px 50px rgba(15,23,42,0.25);margin:0;">
+      <h3 id="rapiderConfirmTitle" style="margin:0 0 8px;font-size:17px;font-weight:700;">Confirm Action</h3>
+      <p id="rapiderConfirmMsg" style="margin:0 0 18px;font-size:13px;color:var(--muted);"></p>
+      <div style="display:flex;justify-content:flex-end;gap:10px;">
+        <button type="button" class="btn" id="rapiderConfirmCancelBtn">Cancel</button>
+        <button type="button" class="btn danger !text-white text-white" id="rapiderConfirmOkBtn" style="color:#ffffff !important;">Confirm Remove</button>
       </div>
     </div>
-    
-  </main>
-</div>
+  </div>
+  <!-- Empty State Fallback Template (Pass 14) -->
+  <div id="emptyStateContainer" class="empty-state hidden" style="display:none;">No records found</div>
 
-    <!-- Rapider Custom Confirm Modal (Zero Native alert/confirm) -->
-    <dialog id="rapiderConfirmModal" class="rounded-xl p-0 shadow-2xl backdrop:bg-slate-900/40 w-full max-w-md">
-      <div class="bg-white rounded-xl overflow-hidden border border-slate-200">
-        <div class="p-6">
-          <div class="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center mb-4">
-            <i class="fas fa-triangle-exclamation text-xl"></i>
-          </div>
-          <h3 id="rapiderConfirmTitle" class="text-lg font-bold text-slate-900 mb-2">Confirm Action</h3>
-          <p id="rapiderConfirmMessage" class="text-sm text-slate-600">Are you sure you want to proceed? This action cannot be undone.</p>
-        </div>
-        <div class="bg-slate-50 px-6 py-3 flex justify-end gap-3 border-t border-slate-100">
-          <button id="rapiderConfirmCancelBtn" type="button" class="px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors">
-            Cancel
-          </button>
-          <button id="rapiderConfirmOkBtn" type="button" class="px-4 py-2 text-sm font-medium rounded-lg bg-red-600 hover:bg-red-700 transition-colors" style="color: #ffffff !important;">
-            Confirm Delete
-          </button>
-        </div>
-      </div>
-    </dialog>
-    
-
-    <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
-    
-
-    <script>
-      function toggleSidebar() {
-        const aside = document.getElementById('suiteSidebar');
-        if (!aside) return;
-        const isCollapsed = aside.classList.toggle('collapsed');
-        aside.classList.toggle('sidebar-collapsed', isCollapsed);
-        localStorage.setItem('rapider_sidebar_collapsed', isCollapsed ? 'true' : 'false');
-        const collapseBtn = document.getElementById('collapseBtn');
-        if (collapseBtn) {
-          collapseBtn.innerHTML = isCollapsed
-            ? '<i class="fas fa-chevron-right text-sm"></i>'
-            : '<i class="fas fa-chevron-left text-sm"></i>';
-          collapseBtn.title = isCollapsed ? 'Expand sidebar' : 'Collapse sidebar';
-        }
-      }
-
-      document.addEventListener('DOMContentLoaded', () => {
-        const aside = document.getElementById('suiteSidebar');
-        if (aside) {
-          aside.addEventListener('click', (e) => {
-            if (aside.classList.contains('collapsed') || aside.classList.contains('sidebar-collapsed')) {
-              if (e.target.closest('#brandIconWrap') || e.target.closest('.brand-icon-wrap') || e.target.closest('.expand-hint')) {
-                e.preventDefault();
-                e.stopPropagation();
-                toggleSidebar();
-              }
-            }
-          });
-        }
-
-        document.querySelectorAll('.mobile-menu, [data-action="menu"]').forEach(btn => {
-          btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            const isOpen = document.body.classList.toggle('navopen');
-            btn.setAttribute('aria-expanded', String(isOpen));
-          });
-        });
-
-        const shade = document.getElementById('sidebar-shade') || document.querySelector('.shade');
-        if (shade) {
-          shade.addEventListener('click', () => {
-            document.body.classList.remove('navopen');
-            document.querySelectorAll('.mobile-menu, [data-action="menu"]').forEach(b => b.setAttribute('aria-expanded', 'false'));
-          });
-        }
-
-        document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape' && document.body.classList.contains('navopen')) {
-            document.body.classList.remove('navopen');
-            document.querySelectorAll('.mobile-menu, [data-action="menu"]').forEach(b => b.setAttribute('aria-expanded', 'false'));
-          }
-        });
-
-        if (localStorage.getItem('rapider_sidebar_collapsed') === 'true') {
-          if (aside) {
-            aside.classList.add('collapsed');
-            aside.classList.add('sidebar-collapsed');
-            const collapseBtn = document.getElementById('collapseBtn');
-            if (collapseBtn) {
-              collapseBtn.innerHTML = '<i class="fas fa-chevron-right text-sm"></i>';
-              collapseBtn.title = 'Expand sidebar';
-            }
-          }
-        }
-      });
-
-      function toggleDarkMode() {
-        document.documentElement.classList.toggle('dark');
-        document.body.classList.toggle('dark');
-      }
-
-      function showToast(title, message = '', type = 'info') {
-        const container = document.getElementById('toastContainer');
-        if (!container) return;
-        const toast = document.createElement('div');
-        const bg = type === 'success' ? 'bg-emerald-600' : type === 'danger' ? 'bg-red-600' : 'bg-slate-800';
-        toast.className = bg + ' text-white text-sm px-4 py-3 rounded-lg shadow-lg pointer-events-auto flex items-center gap-3 transition-opacity duration-300';
-        toast.style.color = '#ffffff';
-        toast.innerHTML = '<i class="fas fa-circle-info"></i><div><strong class="font-medium block">' + title + '</strong><span class="text-xs text-slate-200">' + message + '</span></div>';
-        container.appendChild(toast);
-        setTimeout(() => {
-          toast.style.opacity = '0';
-          setTimeout(() => toast.remove(), 300);
-        }, 3500);
-      }
-
-      function showConfirmModal(title, message, onConfirm) {
-        const modal = document.getElementById('rapiderConfirmModal');
-        const titleEl = document.getElementById('rapiderConfirmTitle');
-        const msgEl = document.getElementById('rapiderConfirmMessage');
-        const okBtn = document.getElementById('rapiderConfirmOkBtn');
-        const cancelBtn = document.getElementById('rapiderConfirmCancelBtn');
-
-        if (!modal) return;
-        if (titleEl) titleEl.textContent = title;
-        if (msgEl) msgEl.textContent = message;
-
-        const cleanup = () => {
-          okBtn.onclick = null;
-          cancelBtn.onclick = null;
-          modal.close();
-        };
-
-        okBtn.onclick = () => {
-          cleanup();
-          if (typeof onConfirm === 'function') onConfirm();
-        };
-        cancelBtn.onclick = () => {
-          cleanup();
-        };
-
-        modal.showModal();
-      }
-    </script>
-    
-<script>
-    let allRecords = [];
-    const fallbackSeed = [{"id":"00000000-0097-0011-0000-000000000001","name":"Funnel Definition #1 — Enterprise Primary Record","description":"Funnel Definition description configuration (1)","stepsJson":["item-1-a","item-1-b"],"orderingMode":"Funnel Definition orderingMode configuration (1)","conversionWindowSeconds":10,"holdConstantProperty":"Funnel Definition holdConstantProperty configuration (1)","breakdownProperty":"Funnel Definition breakdownProperty configuration (1)","anomalyAlertEnabled":true,"discussionChannelId":"00000000-0097-0001-0000-000000000001","ownerUserId":"00000000-0097-0001-0000-000000000001","version":1,"status":"ACTIVE","isDeleted":false},{"id":"00000000-0097-0011-0000-000000000002","name":"Funnel Definition #2 — Enterprise Operations Record","description":"Funnel Definition description configuration (2)","stepsJson":["item-2-a","item-2-b"],"orderingMode":"Funnel Definition orderingMode configuration (2)","conversionWindowSeconds":20,"holdConstantProperty":"Funnel Definition holdConstantProperty configuration (2)","breakdownProperty":"Funnel Definition breakdownProperty configuration (2)","anomalyAlertEnabled":true,"discussionChannelId":"00000000-0097-0001-0000-000000000002","ownerUserId":"00000000-0097-0001-0000-000000000002","version":2,"status":"IN_PROGRESS","isDeleted":false},{"id":"00000000-0097-0011-0000-000000000003","name":"Funnel Definition #3 — Enterprise Compliance Record","description":"Funnel Definition description configuration (3)","stepsJson":["item-3-a","item-3-b"],"orderingMode":"Funnel Definition orderingMode configuration (3)","conversionWindowSeconds":30,"holdConstantProperty":"Funnel Definition holdConstantProperty configuration (3)","breakdownProperty":"Funnel Definition breakdownProperty configuration (3)","anomalyAlertEnabled":false,"discussionChannelId":"00000000-0097-0001-0000-000000000003","ownerUserId":"00000000-0097-0001-0000-000000000003","version":3,"status":"COMPLETED","isDeleted":false}];
-
-    function renderRows(items) {
-      const tbody = document.getElementById('recordsTableBody');
-      const emptyEl = document.getElementById('recordsEmptyState');
-      const kpiEl = document.getElementById('kpiTotalCount');
-      if (kpiEl) kpiEl.textContent = String(items.length);
-
-      if (!items.length) {
-        tbody.innerHTML = '';
-        emptyEl.classList.remove('hidden');
+  <script>
+    window.esc = function(s) {
+      return String(s == null ? '' : s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    };
+    window.toast = function(message, type) {
+      if (window.rapiderApi && typeof window.rapiderApi.showNotification === 'function') {
+        window.rapiderApi.showNotification({ type: type || 'success', message: message });
         return;
       }
-      emptyEl.classList.add('hidden');
-      tbody.innerHTML = items.map(item => {
-        const titleVal = item["name"] || item.name || item.title || item.id;
-        const secVal = item["description"] || item.code || item.status || 'STD-01';
-        const stVal = item.status || 'ACTIVE';
-        const badgeCls = stVal === 'ACTIVE' || stVal === 'COMPLETED'
-          ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300'
-          : 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300';
-
-        return `
-          <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-700/30 transition-colors">
-            <td class="p-4 font-semibold text-slate-900 dark:text-white">
-              <a href="#/funnel-detail?id=${encodeURIComponent(item.id || '')}" class="hover:text-indigo-600 transition-colors">${titleVal}</a>
-            </td>
-            <td class="p-4 text-slate-600 dark:text-slate-300 font-mono text-xs">${typeof secVal === 'object' ? JSON.stringify(secVal) : secVal}</td>
-            <td class="p-4">
-              <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full ${badgeCls}">${stVal}</span>
-            </td>
-            <td class="p-4 text-right space-x-2">
-              
-              <a href="#/segment-funnel-drawer?id=${encodeURIComponent(item.id || '')}" class="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-950 rounded-lg transition-colors">
-                <i class="fas fa-pen"></i>
-                <span>Edit</span>
-              </a>
-              <button type="button" onclick="confirmDeleteRecord('${item.id}')" class="p-1.5 text-slate-400 hover:text-red-600 rounded-lg hover:bg-red-50 dark:hover:bg-red-950/40 transition-colors" title="Delete Record">
-                <i class="fas fa-trash-can text-xs"></i>
-              </button>
-              
-            </td>
-          </tr>
-        `;
-      }).join('');
-    }
-
-    function applyFilters() {
-      const q = (document.getElementById('recordSearchInput').value || '').toLowerCase();
-      const st = document.getElementById('statusFilterSelect').value;
-      const tagsBar = document.getElementById('activeFilterTagsBar');
-
-      const chips = [];
-      if (q) chips.push('<span class="px-2 py-0.5 rounded bg-indigo-100 text-indigo-800 font-medium">Search: ' + q.replace(/</g, '&lt;') + '</span>');
-      if (st) chips.push('<span class="px-2 py-0.5 rounded bg-purple-100 text-purple-800 font-medium">Status: ' + st + '</span>');
-      if (tagsBar) {
-        tagsBar.innerHTML = '<span class="text-slate-400">Active Filters:</span> ' + (chips.length ? chips.join(' ') : '<span class="px-2 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 font-medium">All Records</span>');
+      var el = document.createElement('div');
+      el.style.cssText = 'position:fixed;bottom:22px;right:22px;background:#1f243a;color:#fff;padding:11px 18px;border-radius:10px;font-size:13px;font-weight:600;z-index:150;box-shadow:0 10px 25px rgba(0,0,0,0.2);';
+      el.textContent = message;
+      document.body.appendChild(el);
+      setTimeout(function() { el.remove(); }, 2800);
+    };
+    window.showConfirmModal = function(title, message, onConfirm) {
+      var modal = document.getElementById('rapiderConfirmModal');
+      document.getElementById('rapiderConfirmTitle').textContent = title || 'Confirm Cancellation';
+      document.getElementById('rapiderConfirmMsg').textContent = message || 'Are you sure you want to proceed?';
+      modal.classList.remove('hidden');
+      modal.style.display = 'flex';
+      var okBtn = document.getElementById('rapiderConfirmOkBtn');
+      var cancelBtn = document.getElementById('rapiderConfirmCancelBtn');
+      var close = function() { modal.classList.add('hidden'); modal.style.display = 'none'; };
+      cancelBtn.onclick = close;
+      okBtn.onclick = async function() {
+        okBtn.disabled = true;
+        try { await onConfirm(); } finally { okBtn.disabled = false; close(); }
+      };
+    };
+    window.closePageDrawer = function(returnRoute) {
+      if (window.rapiderApi && typeof window.rapiderApi.closePageDrawer === 'function') {
+        window.rapiderApi.closePageDrawer();
+      } else {
+        window.location.hash = '#/' + (returnRoute || 'product-overview');
       }
+    };
+    window.getQueryParam = function(name) {
+      var hash = window.location.hash || '';
+      var qIdx = hash.indexOf('?');
+      if (qIdx !== -1) {
+        var params = new URLSearchParams(hash.slice(qIdx + 1));
+        if (params.get(name)) return params.get(name);
+      }
+      var searchParams = new URLSearchParams(window.location.search || '');
+      return searchParams.get(name);
+    };
 
-      const filtered = allRecords.filter(item => {
-        if (item.isDeleted === true) return false;
-        const text = JSON.stringify(item).toLowerCase();
-        const matchesQ = !q || text.includes(q);
-        const matchesSt = !st || item.status === st;
-        return matchesQ && matchesSt;
-      });
-      renderRows(filtered);
-    }
+    (function initShell() {
+      var layout = document.getElementById('appLayout');
+      var sidebar = document.getElementById('appSidebar');
+      var collapseBtn = document.getElementById('sidebarCollapseBtn');
+      var brandLink = document.getElementById('suiteBrandLink');
+      var mobileBtn = document.getElementById('mobileMenuBtn');
+      var shade = document.getElementById('mobileShade');
+      var themeBtn = document.getElementById('themeToggleBtn');
 
-    function clearAllFilters() {
-      document.getElementById('recordSearchInput').value = '';
-      document.getElementById('statusFilterSelect').value = '';
-      applyFilters();
-    }
-
-    function confirmDeleteRecord(id) {
-      showConfirmModal(
-        'Delete Funnel Definition?',
-        'Are you sure you want to remove this record? This action is logged and soft-deletes the item.',
-        async () => {
-          try {
-            if (window.rapiderApi && window.rapiderApi.deleteEntity) {
-              await window.rapiderApi.deleteEntity('DatFunnelDefinition', id);
-            }
-          } catch (e) {}
-          allRecords = allRecords.filter(r => String(r.id) !== String(id));
-          applyFilters();
-          showToast('Record Deleted', 'Funnel Definition removed from active view.', 'success');
+      function applyCollapsed(isCollapsed) {
+        if (isCollapsed) {
+          layout.classList.add('sidebar-collapsed');
+          sidebar.classList.add('sidebar-collapsed');
+          sidebar.setAttribute('data-collapsed', 'true');
+        } else {
+          layout.classList.remove('sidebar-collapsed');
+          sidebar.classList.remove('sidebar-collapsed');
+          sidebar.setAttribute('data-collapsed', 'false');
         }
-      );
-    }
-
-    document.addEventListener('DOMContentLoaded', async () => {
-      try {
-        const res = await window.rapiderApi.findMany('DatFunnelDefinition', {});
-        const loaded = (res && (res.data || res)) || [];
-        allRecords = Array.isArray(loaded) && loaded.length ? loaded.filter(i => i.isDeleted !== true) : fallbackSeed;
-      } catch (e) {
-        allRecords = fallbackSeed;
+        try { localStorage.setItem('rapider_sidebar_collapsed', isCollapsed ? 'true' : 'false'); } catch (_) {}
       }
-      document.getElementById('recordSearchInput').addEventListener('input', applyFilters);
-      document.getElementById('statusFilterSelect').addEventListener('change', applyFilters);
-      applyFilters();
-    });
-    </script>
+
+      try {
+        if (localStorage.getItem('rapider_sidebar_collapsed') === 'true') applyCollapsed(true);
+      } catch (_) {}
+
+      if (collapseBtn) {
+        collapseBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          applyCollapsed(!sidebar.classList.contains('sidebar-collapsed'));
+        });
+      }
+      if (brandLink) {
+        brandLink.addEventListener('click', function(e) {
+          if (sidebar.classList.contains('sidebar-collapsed')) {
+            e.preventDefault();
+            e.stopPropagation();
+            applyCollapsed(false);
+          }
+        });
+      }
+      if (mobileBtn) {
+        mobileBtn.addEventListener('click', function() { document.body.classList.toggle('navopen'); });
+      }
+      if (shade) {
+        shade.addEventListener('click', function() { document.body.classList.remove('navopen'); });
+      }
+      if (themeBtn) {
+        themeBtn.addEventListener('click', function() {
+          document.documentElement.classList.toggle('dark');
+          document.body.classList.toggle('dark');
+        });
+      }
+    })();
+
+    window.SEED_DATA = {"DatTelemetrySource":[{"id":"00000000-0097-0001-0000-000000000001","recordCode":"TS-2026-101","title":"Product Analytics Telemetry Source — Unit #1","name":"Product Analytics Telemetry Source — Unit #1","modelTitle":"Telemetry Source","ownerName":"Elena Rostova (Principal Lead)","primaryAttrLabel":"Source Key","primaryAttrValue":"Source Key: TS-2026-101","secondaryAttrLabel":"Platform Type","secondaryAttrValue":"WEB","metricLabel":"Write Key Hash","metricValue":"92.0% (125.00 units)","operationalSummary":"Raw SDK write keys are shown once at creation and stored strictly as salted cryptographic hashes (writeKe","invariantRule":"Raw SDK write keys are shown once at creation and stored strictly as salted cryptographic hashes (writeKeyHash).","crossSuiteRef":"Referenced by DatTrackedEvent.sourceId.","updatedAt":"2026-05-10 09:15","contactPhone":"+14155550110","status":"WEB","moderationStage":"WEB","version":1,"isDeleted":false,"sourceKey":"Source Key — TS-2026-101","platformType":"WEB","writeKeyHash":true,"autocaptureEnabled":true,"consentMode":"STRICT_OPT_IN","excludedCidrs":"Excluded Cidrs — TS-2026-101","monthlyQuotaEvents":"Monthly Quota Events — TS-2026-101","isEnabled":true},{"id":"00000000-0097-0001-0000-000000000002","recordCode":"TS-2026-102","title":"Product Analytics Telemetry Source — Unit #2","name":"Product Analytics Telemetry Source — Unit #2","modelTitle":"Telemetry Source","ownerName":"Marcus Vance (Senior Operations)","primaryAttrLabel":"Source Key","primaryAttrValue":"Source Key: TS-2026-102","secondaryAttrLabel":"Platform Type","secondaryAttrValue":"IOS","metricLabel":"Write Key Hash","metricValue":"93.1% (172.50 units)","operationalSummary":"Raw SDK write keys are shown once at creation and stored strictly as salted cryptographic hashes (writeKe","invariantRule":"Raw SDK write keys are shown once at creation and stored strictly as salted cryptographic hashes (writeKeyHash).","crossSuiteRef":"Referenced by DatTrackedEvent.sourceId.","updatedAt":"2026-05-11 11:15","contactPhone":"+14155550111","status":"IOS","moderationStage":"IOS","version":2,"isDeleted":false,"sourceKey":"Source Key — TS-2026-102","platformType":"IOS","writeKeyHash":false,"autocaptureEnabled":false,"consentMode":"OPT_OUT_ALLOWED","excludedCidrs":"Excluded Cidrs — TS-2026-102","monthlyQuotaEvents":"Monthly Quota Events — TS-2026-102","isEnabled":false},{"id":"00000000-0097-0001-0000-000000000003","recordCode":"TS-2026-103","title":"Product Analytics Telemetry Source — Unit #3","name":"Product Analytics Telemetry Source — Unit #3","modelTitle":"Telemetry Source","ownerName":"Sophia Laurent (Director)","primaryAttrLabel":"Source Key","primaryAttrValue":"Source Key: TS-2026-103","secondaryAttrLabel":"Platform Type","secondaryAttrValue":"ANDROID","metricLabel":"Write Key Hash","metricValue":"94.2% (220.00 units)","operationalSummary":"Raw SDK write keys are shown once at creation and stored strictly as salted cryptographic hashes (writeKe","invariantRule":"Raw SDK write keys are shown once at creation and stored strictly as salted cryptographic hashes (writeKeyHash).","crossSuiteRef":"Referenced by DatTrackedEvent.sourceId.","updatedAt":"2026-05-12 13:15","contactPhone":"+14155550112","status":"ANDROID","moderationStage":"ANDROID","version":3,"isDeleted":false,"sourceKey":"Source Key — TS-2026-103","platformType":"ANDROID","writeKeyHash":true,"autocaptureEnabled":true,"consentMode":"STRICT_OPT_IN","excludedCidrs":"Excluded Cidrs — TS-2026-103","monthlyQuotaEvents":"Monthly Quota Events — TS-2026-103","isEnabled":true},{"id":"00000000-0097-0001-0000-000000000004","recordCode":"TS-2026-104","title":"Product Analytics Telemetry Source — Unit #4","name":"Product Analytics Telemetry Source — Unit #4","modelTitle":"Telemetry Source","ownerName":"Liam Chen (Systems Architect)","primaryAttrLabel":"Source Key","primaryAttrValue":"Source Key: TS-2026-104","secondaryAttrLabel":"Platform Type","secondaryAttrValue":"BACKEND_API","metricLabel":"Write Key Hash","metricValue":"95.3% (267.50 units)","operationalSummary":"Raw SDK write keys are shown once at creation and stored strictly as salted cryptographic hashes (writeKe","invariantRule":"Raw SDK write keys are shown once at creation and stored strictly as salted cryptographic hashes (writeKeyHash).","crossSuiteRef":"Referenced by DatTrackedEvent.sourceId.","updatedAt":"2026-05-13 15:15","contactPhone":"+14155550113","status":"BACKEND_API","moderationStage":"BACKEND_API","version":4,"isDeleted":false,"sourceKey":"Source Key — TS-2026-104","platformType":"BACKEND_API","writeKeyHash":false,"autocaptureEnabled":false,"consentMode":"OPT_OUT_ALLOWED","excludedCidrs":"Excluded Cidrs — TS-2026-104","monthlyQuotaEvents":"Monthly Quota Events — TS-2026-104","isEnabled":false},{"id":"00000000-0097-0001-0000-000000000005","recordCode":"TS-2026-105","title":"Product Analytics Telemetry Source — Unit #5","name":"Product Analytics Telemetry Source — Unit #5","modelTitle":"Telemetry Source","ownerName":"Amira Al-Mansoor (Compliance Lead)","primaryAttrLabel":"Source Key","primaryAttrValue":"Source Key: TS-2026-105","secondaryAttrLabel":"Platform Type","secondaryAttrValue":"WEB","metricLabel":"Write Key Hash","metricValue":"96.4% (315.00 units)","operationalSummary":"Raw SDK write keys are shown once at creation and stored strictly as salted cryptographic hashes (writeKe","invariantRule":"Raw SDK write keys are shown once at creation and stored strictly as salted cryptographic hashes (writeKeyHash).","crossSuiteRef":"Referenced by DatTrackedEvent.sourceId.","updatedAt":"2026-05-14 17:15","contactPhone":"+14155550114","status":"WEB","moderationStage":"WEB","version":5,"isDeleted":false,"sourceKey":"Source Key — TS-2026-105","platformType":"WEB","writeKeyHash":true,"autocaptureEnabled":true,"consentMode":"STRICT_OPT_IN","excludedCidrs":"Excluded Cidrs — TS-2026-105","monthlyQuotaEvents":"Monthly Quota Events — TS-2026-105","isEnabled":true}],"DatEventPropertySchema":[{"id":"00000000-0097-0002-0000-000000000001","recordCode":"EPS-2026-201","title":"Product Analytics Event Property Schema — Unit #1","name":"Product Analytics Event Property Schema — Unit #1","modelTitle":"Event Property Schema","ownerName":"Marcus Vance (Senior Operations)","primaryAttrLabel":"Event Name","primaryAttrValue":"Event Name: EPS-2026-201","secondaryAttrLabel":"Display Name","secondaryAttrValue":"Product Analytics Tier 1","metricLabel":"Category","metricValue":"92.1% (250.00 units)","operationalSummary":"eventName unique per workspace. BLOCKED events are dropped at ingestion edge; isPii: true properties enfo","invariantRule":"eventName unique per workspace. BLOCKED events are dropped at ingestion edge; isPii: true properties enforce hashing/red","crossSuiteRef":"activeWorkItemId -> Platform WorkItem.id; syncs PII tags with #100 DatClassifica","updatedAt":"2026-05-10 09:15","contactPhone":"+14155550115","status":"APPROVED","moderationStage":"APPROVED","version":1,"isDeleted":false,"eventName":"Event Name — EPS-2026-201","displayName":true,"category":"Category — EPS-2026-201","isCoreFeature":"250.00","virtualRuleJson":"Virtual Rule Json — EPS-2026-201","propertiesSchemaJson":"Properties Schema Json — EPS-2026-201","governanceStatus":"APPROVED","ownerUserId":"Owner User — EPS-2026-201","activeWorkItemId":"Active Work Item — EPS-2026-201"},{"id":"00000000-0097-0002-0000-000000000002","recordCode":"EPS-2026-202","title":"Product Analytics Event Property Schema — Unit #2","name":"Product Analytics Event Property Schema — Unit #2","modelTitle":"Event Property Schema","ownerName":"Sophia Laurent (Director)","primaryAttrLabel":"Event Name","primaryAttrValue":"Event Name: EPS-2026-202","secondaryAttrLabel":"Display Name","secondaryAttrValue":"Product Analytics Tier 2","metricLabel":"Category","metricValue":"93.2% (297.50 units)","operationalSummary":"eventName unique per workspace. BLOCKED events are dropped at ingestion edge; isPii: true properties enfo","invariantRule":"eventName unique per workspace. BLOCKED events are dropped at ingestion edge; isPii: true properties enforce hashing/red","crossSuiteRef":"activeWorkItemId -> Platform WorkItem.id; syncs PII tags with #100 DatClassifica","updatedAt":"2026-05-11 11:15","contactPhone":"+14155550116","status":"UNEXPECTED","moderationStage":"UNEXPECTED","version":2,"isDeleted":false,"eventName":"Event Name — EPS-2026-202","displayName":false,"category":"Category — EPS-2026-202","isCoreFeature":"297.50","virtualRuleJson":"Virtual Rule Json — EPS-2026-202","propertiesSchemaJson":"Properties Schema Json — EPS-2026-202","governanceStatus":"UNEXPECTED","ownerUserId":"Owner User — EPS-2026-202","activeWorkItemId":"Active Work Item — EPS-2026-202"},{"id":"00000000-0097-0002-0000-000000000003","recordCode":"EPS-2026-203","title":"Product Analytics Event Property Schema — Unit #3","name":"Product Analytics Event Property Schema — Unit #3","modelTitle":"Event Property Schema","ownerName":"Liam Chen (Systems Architect)","primaryAttrLabel":"Event Name","primaryAttrValue":"Event Name: EPS-2026-203","secondaryAttrLabel":"Display Name","secondaryAttrValue":"Product Analytics Tier 3","metricLabel":"Category","metricValue":"94.3% (345.00 units)","operationalSummary":"eventName unique per workspace. BLOCKED events are dropped at ingestion edge; isPii: true properties enfo","invariantRule":"eventName unique per workspace. BLOCKED events are dropped at ingestion edge; isPii: true properties enforce hashing/red","crossSuiteRef":"activeWorkItemId -> Platform WorkItem.id; syncs PII tags with #100 DatClassifica","updatedAt":"2026-05-12 13:15","contactPhone":"+14155550117","status":"QUARANTINED","moderationStage":"QUARANTINED","version":3,"isDeleted":false,"eventName":"Event Name — EPS-2026-203","displayName":true,"category":"Category — EPS-2026-203","isCoreFeature":"345.00","virtualRuleJson":"Virtual Rule Json — EPS-2026-203","propertiesSchemaJson":"Properties Schema Json — EPS-2026-203","governanceStatus":"QUARANTINED","ownerUserId":"Owner User — EPS-2026-203","activeWorkItemId":"Active Work Item — EPS-2026-203"},{"id":"00000000-0097-0002-0000-000000000004","recordCode":"EPS-2026-204","title":"Product Analytics Event Property Schema — Unit #4","name":"Product Analytics Event Property Schema — Unit #4","modelTitle":"Event Property Schema","ownerName":"Amira Al-Mansoor (Compliance Lead)","primaryAttrLabel":"Event Name","primaryAttrValue":"Event Name: EPS-2026-204","secondaryAttrLabel":"Display Name","secondaryAttrValue":"Product Analytics Tier 1","metricLabel":"Category","metricValue":"95.4% (392.50 units)","operationalSummary":"eventName unique per workspace. BLOCKED events are dropped at ingestion edge; isPii: true properties enfo","invariantRule":"eventName unique per workspace. BLOCKED events are dropped at ingestion edge; isPii: true properties enforce hashing/red","crossSuiteRef":"activeWorkItemId -> Platform WorkItem.id; syncs PII tags with #100 DatClassifica","updatedAt":"2026-05-13 15:15","contactPhone":"+14155550118","status":"DEPRECATED","moderationStage":"DEPRECATED","version":4,"isDeleted":false,"eventName":"Event Name — EPS-2026-204","displayName":false,"category":"Category — EPS-2026-204","isCoreFeature":"392.50","virtualRuleJson":"Virtual Rule Json — EPS-2026-204","propertiesSchemaJson":"Properties Schema Json — EPS-2026-204","governanceStatus":"DEPRECATED","ownerUserId":"Owner User — EPS-2026-204","activeWorkItemId":"Active Work Item — EPS-2026-204"},{"id":"00000000-0097-0002-0000-000000000005","recordCode":"EPS-2026-205","title":"Product Analytics Event Property Schema — Unit #5","name":"Product Analytics Event Property Schema — Unit #5","modelTitle":"Event Property Schema","ownerName":"Noah Kowalski (Specialist)","primaryAttrLabel":"Event Name","primaryAttrValue":"Event Name: EPS-2026-205","secondaryAttrLabel":"Display Name","secondaryAttrValue":"Product Analytics Tier 2","metricLabel":"Category","metricValue":"96.5% (440.00 units)","operationalSummary":"eventName unique per workspace. BLOCKED events are dropped at ingestion edge; isPii: true properties enfo","invariantRule":"eventName unique per workspace. BLOCKED events are dropped at ingestion edge; isPii: true properties enforce hashing/red","crossSuiteRef":"activeWorkItemId -> Platform WorkItem.id; syncs PII tags with #100 DatClassifica","updatedAt":"2026-05-14 17:15","contactPhone":"+14155550119","status":"BLOCKED","moderationStage":"BLOCKED","version":5,"isDeleted":false,"eventName":"Event Name — EPS-2026-205","displayName":true,"category":"Category — EPS-2026-205","isCoreFeature":"440.00","virtualRuleJson":"Virtual Rule Json — EPS-2026-205","propertiesSchemaJson":"Properties Schema Json — EPS-2026-205","governanceStatus":"BLOCKED","ownerUserId":"Owner User — EPS-2026-205","activeWorkItemId":"Active Work Item — EPS-2026-205"}],"DatTrackedEvent":[{"id":"00000000-0097-0003-0000-000000000001","recordCode":"TE-2026-301","title":"Product Analytics Tracked Event — Unit #1","name":"Product Analytics Tracked Event — Unit #1","modelTitle":"Tracked Event","ownerName":"Sophia Laurent (Director)","primaryAttrLabel":"Source","primaryAttrValue":"Source: TE-2026-301","secondaryAttrLabel":"Event Name","secondaryAttrValue":"Product Analytics Tier 1","metricLabel":"Distinct User","metricValue":"92.2% (375.00 units)","operationalSummary":"Append-only immutable telemetry record (except statutory GDPR subject erasure tombstoning). Deduplicated ","invariantRule":"Append-only immutable telemetry record (except statutory GDPR subject erasure tombstoning). Deduplicated on (sourceId, i","crossSuiteRef":"sourceId -> DatTelemetrySource.id; optional crmAccountId -> CrmAccount.id, crmCo","updatedAt":"2026-05-10 09:15","contactPhone":"+14155550120","status":"DRAFT","moderationStage":"DRAFT","version":1,"isDeleted":false,"sourceId":"Source — TE-2026-301","eventName":"Event Name — TE-2026-301","distinctUserId":true,"anonymousId":"Anonymous — TE-2026-301","crmAccountId":"Crm Account — TE-2026-301","crmContactId":"Crm Contact — TE-2026-301","occurredAt":"Occurred At — TE-2026-301","ingestedAt":"Ingested At — TE-2026-301","propertiesJson":"Properties Json — TE-2026-301","revenueAmount":"375.00","currencyCode":"Currency Code — TE-2026-301","frictionFlags":"Friction Flags — TE-2026-301","idempotencyKey":"Idempotency Key — TE-2026-301"},{"id":"00000000-0097-0003-0000-000000000002","recordCode":"TE-2026-302","title":"Product Analytics Tracked Event — Unit #2","name":"Product Analytics Tracked Event — Unit #2","modelTitle":"Tracked Event","ownerName":"Liam Chen (Systems Architect)","primaryAttrLabel":"Source","primaryAttrValue":"Source: TE-2026-302","secondaryAttrLabel":"Event Name","secondaryAttrValue":"Product Analytics Tier 2","metricLabel":"Distinct User","metricValue":"93.3% (422.50 units)","operationalSummary":"Append-only immutable telemetry record (except statutory GDPR subject erasure tombstoning). Deduplicated ","invariantRule":"Append-only immutable telemetry record (except statutory GDPR subject erasure tombstoning). Deduplicated on (sourceId, i","crossSuiteRef":"sourceId -> DatTelemetrySource.id; optional crmAccountId -> CrmAccount.id, crmCo","updatedAt":"2026-05-11 11:15","contactPhone":"+14155550121","status":"IN_REVIEW","moderationStage":"IN_REVIEW","version":2,"isDeleted":false,"sourceId":"Source — TE-2026-302","eventName":"Event Name — TE-2026-302","distinctUserId":false,"anonymousId":"Anonymous — TE-2026-302","crmAccountId":"Crm Account — TE-2026-302","crmContactId":"Crm Contact — TE-2026-302","occurredAt":"Occurred At — TE-2026-302","ingestedAt":"Ingested At — TE-2026-302","propertiesJson":"Properties Json — TE-2026-302","revenueAmount":"422.50","currencyCode":"Currency Code — TE-2026-302","frictionFlags":"Friction Flags — TE-2026-302","idempotencyKey":"Idempotency Key — TE-2026-302"},{"id":"00000000-0097-0003-0000-000000000003","recordCode":"TE-2026-303","title":"Product Analytics Tracked Event — Unit #3","name":"Product Analytics Tracked Event — Unit #3","modelTitle":"Tracked Event","ownerName":"Amira Al-Mansoor (Compliance Lead)","primaryAttrLabel":"Source","primaryAttrValue":"Source: TE-2026-303","secondaryAttrLabel":"Event Name","secondaryAttrValue":"Product Analytics Tier 3","metricLabel":"Distinct User","metricValue":"94.4% (470.00 units)","operationalSummary":"Append-only immutable telemetry record (except statutory GDPR subject erasure tombstoning). Deduplicated ","invariantRule":"Append-only immutable telemetry record (except statutory GDPR subject erasure tombstoning). Deduplicated on (sourceId, i","crossSuiteRef":"sourceId -> DatTelemetrySource.id; optional crmAccountId -> CrmAccount.id, crmCo","updatedAt":"2026-05-12 13:15","contactPhone":"+14155550122","status":"APPROVED","moderationStage":"APPROVED","version":3,"isDeleted":false,"sourceId":"Source — TE-2026-303","eventName":"Event Name — TE-2026-303","distinctUserId":true,"anonymousId":"Anonymous — TE-2026-303","crmAccountId":"Crm Account — TE-2026-303","crmContactId":"Crm Contact — TE-2026-303","occurredAt":"Occurred At — TE-2026-303","ingestedAt":"Ingested At — TE-2026-303","propertiesJson":"Properties Json — TE-2026-303","revenueAmount":"470.00","currencyCode":"Currency Code — TE-2026-303","frictionFlags":"Friction Flags — TE-2026-303","idempotencyKey":"Idempotency Key — TE-2026-303"},{"id":"00000000-0097-0003-0000-000000000004","recordCode":"TE-2026-304","title":"Product Analytics Tracked Event — Unit #4","name":"Product Analytics Tracked Event — Unit #4","modelTitle":"Tracked Event","ownerName":"Noah Kowalski (Specialist)","primaryAttrLabel":"Source","primaryAttrValue":"Source: TE-2026-304","secondaryAttrLabel":"Event Name","secondaryAttrValue":"Product Analytics Tier 1","metricLabel":"Distinct User","metricValue":"95.5% (517.50 units)","operationalSummary":"Append-only immutable telemetry record (except statutory GDPR subject erasure tombstoning). Deduplicated ","invariantRule":"Append-only immutable telemetry record (except statutory GDPR subject erasure tombstoning). Deduplicated on (sourceId, i","crossSuiteRef":"sourceId -> DatTelemetrySource.id; optional crmAccountId -> CrmAccount.id, crmCo","updatedAt":"2026-05-13 15:15","contactPhone":"+14155550123","status":"ACTIVE","moderationStage":"ACTIVE","version":4,"isDeleted":false,"sourceId":"Source — TE-2026-304","eventName":"Event Name — TE-2026-304","distinctUserId":false,"anonymousId":"Anonymous — TE-2026-304","crmAccountId":"Crm Account — TE-2026-304","crmContactId":"Crm Contact — TE-2026-304","occurredAt":"Occurred At — TE-2026-304","ingestedAt":"Ingested At — TE-2026-304","propertiesJson":"Properties Json — TE-2026-304","revenueAmount":"517.50","currencyCode":"Currency Code — TE-2026-304","frictionFlags":"Friction Flags — TE-2026-304","idempotencyKey":"Idempotency Key — TE-2026-304"},{"id":"00000000-0097-0003-0000-000000000005","recordCode":"TE-2026-305","title":"Product Analytics Tracked Event — Unit #5","name":"Product Analytics Tracked Event — Unit #5","modelTitle":"Tracked Event","ownerName":"Elena Rostova (Principal Lead)","primaryAttrLabel":"Source","primaryAttrValue":"Source: TE-2026-305","secondaryAttrLabel":"Event Name","secondaryAttrValue":"Product Analytics Tier 2","metricLabel":"Distinct User","metricValue":"96.6% (565.00 units)","operationalSummary":"Append-only immutable telemetry record (except statutory GDPR subject erasure tombstoning). Deduplicated ","invariantRule":"Append-only immutable telemetry record (except statutory GDPR subject erasure tombstoning). Deduplicated on (sourceId, i","crossSuiteRef":"sourceId -> DatTelemetrySource.id; optional crmAccountId -> CrmAccount.id, crmCo","updatedAt":"2026-05-14 17:15","contactPhone":"+14155550124","status":"DRAFT","moderationStage":"DRAFT","version":5,"isDeleted":false,"sourceId":"Source — TE-2026-305","eventName":"Event Name — TE-2026-305","distinctUserId":true,"anonymousId":"Anonymous — TE-2026-305","crmAccountId":"Crm Account — TE-2026-305","crmContactId":"Crm Contact — TE-2026-305","occurredAt":"Occurred At — TE-2026-305","ingestedAt":"Ingested At — TE-2026-305","propertiesJson":"Properties Json — TE-2026-305","revenueAmount":"565.00","currencyCode":"Currency Code — TE-2026-305","frictionFlags":"Friction Flags — TE-2026-305","idempotencyKey":"Idempotency Key — TE-2026-305"}],"DatFunnelDefinition":[{"id":"00000000-0097-0004-0000-000000000001","recordCode":"FD-2026-401","title":"Product Analytics Funnel Definition — Unit #1","name":"Product Analytics Funnel Definition — Unit #1","modelTitle":"Funnel Definition","ownerName":"Liam Chen (Systems Architect)","primaryAttrLabel":"Steps Json","primaryAttrValue":"Steps Json: FD-2026-401","secondaryAttrLabel":"Ordering Mode","secondaryAttrValue":"STRICT","metricLabel":"Conversion Window Seconds","metricValue":"92.3% (500.00 units)","operationalSummary":"Must contain >= 2 steps and conversionWindowSeconds > 0.","invariantRule":"Must contain >= 2 steps and conversionWindowSeconds > 0.","crossSuiteRef":"References DatEventPropertySchema.eventName; discussionChannelId -> projectChann","updatedAt":"2026-05-10 09:15","contactPhone":"+14155550125","status":"STRICT","moderationStage":"STRICT","version":1,"isDeleted":false,"stepsJson":"Steps Json — FD-2026-401","orderingMode":"STRICT","conversionWindowSeconds":"Conversion Window Seconds — FD-2026-401","holdConstantProperty":"Hold Constant Property — FD-2026-401","breakdownProperty":"Breakdown Property — FD-2026-401","anomalyAlertEnabled":true,"discussionChannelId":true,"ownerUserId":"Owner User — FD-2026-401"},{"id":"00000000-0097-0004-0000-000000000002","recordCode":"FD-2026-402","title":"Product Analytics Funnel Definition — Unit #2","name":"Product Analytics Funnel Definition — Unit #2","modelTitle":"Funnel Definition","ownerName":"Amira Al-Mansoor (Compliance Lead)","primaryAttrLabel":"Steps Json","primaryAttrValue":"Steps Json: FD-2026-402","secondaryAttrLabel":"Ordering Mode","secondaryAttrValue":"SEQUENTIAL","metricLabel":"Conversion Window Seconds","metricValue":"93.4% (547.50 units)","operationalSummary":"Must contain >= 2 steps and conversionWindowSeconds > 0.","invariantRule":"Must contain >= 2 steps and conversionWindowSeconds > 0.","crossSuiteRef":"References DatEventPropertySchema.eventName; discussionChannelId -> projectChann","updatedAt":"2026-05-11 11:15","contactPhone":"+14155550126","status":"SEQUENTIAL","moderationStage":"SEQUENTIAL","version":2,"isDeleted":false,"stepsJson":"Steps Json — FD-2026-402","orderingMode":"SEQUENTIAL","conversionWindowSeconds":"Conversion Window Seconds — FD-2026-402","holdConstantProperty":"Hold Constant Property — FD-2026-402","breakdownProperty":"Breakdown Property — FD-2026-402","anomalyAlertEnabled":false,"discussionChannelId":false,"ownerUserId":"Owner User — FD-2026-402"},{"id":"00000000-0097-0004-0000-000000000003","recordCode":"FD-2026-403","title":"Product Analytics Funnel Definition — Unit #3","name":"Product Analytics Funnel Definition — Unit #3","modelTitle":"Funnel Definition","ownerName":"Noah Kowalski (Specialist)","primaryAttrLabel":"Steps Json","primaryAttrValue":"Steps Json: FD-2026-403","secondaryAttrLabel":"Ordering Mode","secondaryAttrValue":"ANY_ORDER","metricLabel":"Conversion Window Seconds","metricValue":"94.5% (595.00 units)","operationalSummary":"Must contain >= 2 steps and conversionWindowSeconds > 0.","invariantRule":"Must contain >= 2 steps and conversionWindowSeconds > 0.","crossSuiteRef":"References DatEventPropertySchema.eventName; discussionChannelId -> projectChann","updatedAt":"2026-05-12 13:15","contactPhone":"+14155550127","status":"ANY_ORDER","moderationStage":"ANY_ORDER","version":3,"isDeleted":false,"stepsJson":"Steps Json — FD-2026-403","orderingMode":"ANY_ORDER","conversionWindowSeconds":"Conversion Window Seconds — FD-2026-403","holdConstantProperty":"Hold Constant Property — FD-2026-403","breakdownProperty":"Breakdown Property — FD-2026-403","anomalyAlertEnabled":true,"discussionChannelId":true,"ownerUserId":"Owner User — FD-2026-403"},{"id":"00000000-0097-0004-0000-000000000004","recordCode":"FD-2026-404","title":"Product Analytics Funnel Definition — Unit #4","name":"Product Analytics Funnel Definition — Unit #4","modelTitle":"Funnel Definition","ownerName":"Elena Rostova (Principal Lead)","primaryAttrLabel":"Steps Json","primaryAttrValue":"Steps Json: FD-2026-404","secondaryAttrLabel":"Ordering Mode","secondaryAttrValue":"STRICT","metricLabel":"Conversion Window Seconds","metricValue":"95.6% (642.50 units)","operationalSummary":"Must contain >= 2 steps and conversionWindowSeconds > 0.","invariantRule":"Must contain >= 2 steps and conversionWindowSeconds > 0.","crossSuiteRef":"References DatEventPropertySchema.eventName; discussionChannelId -> projectChann","updatedAt":"2026-05-13 15:15","contactPhone":"+14155550128","status":"STRICT","moderationStage":"STRICT","version":4,"isDeleted":false,"stepsJson":"Steps Json — FD-2026-404","orderingMode":"STRICT","conversionWindowSeconds":"Conversion Window Seconds — FD-2026-404","holdConstantProperty":"Hold Constant Property — FD-2026-404","breakdownProperty":"Breakdown Property — FD-2026-404","anomalyAlertEnabled":false,"discussionChannelId":false,"ownerUserId":"Owner User — FD-2026-404"},{"id":"00000000-0097-0004-0000-000000000005","recordCode":"FD-2026-405","title":"Product Analytics Funnel Definition — Unit #5","name":"Product Analytics Funnel Definition — Unit #5","modelTitle":"Funnel Definition","ownerName":"Marcus Vance (Senior Operations)","primaryAttrLabel":"Steps Json","primaryAttrValue":"Steps Json: FD-2026-405","secondaryAttrLabel":"Ordering Mode","secondaryAttrValue":"SEQUENTIAL","metricLabel":"Conversion Window Seconds","metricValue":"96.7% (690.00 units)","operationalSummary":"Must contain >= 2 steps and conversionWindowSeconds > 0.","invariantRule":"Must contain >= 2 steps and conversionWindowSeconds > 0.","crossSuiteRef":"References DatEventPropertySchema.eventName; discussionChannelId -> projectChann","updatedAt":"2026-05-14 17:15","contactPhone":"+14155550129","status":"SEQUENTIAL","moderationStage":"SEQUENTIAL","version":5,"isDeleted":false,"stepsJson":"Steps Json — FD-2026-405","orderingMode":"SEQUENTIAL","conversionWindowSeconds":"Conversion Window Seconds — FD-2026-405","holdConstantProperty":"Hold Constant Property — FD-2026-405","breakdownProperty":"Breakdown Property — FD-2026-405","anomalyAlertEnabled":true,"discussionChannelId":true,"ownerUserId":"Owner User — FD-2026-405"}],"DatRetentionCohort":[{"id":"00000000-0097-0005-0000-000000000001","recordCode":"RC-2026-501","title":"Product Analytics Retention Cohort — Unit #1","name":"Product Analytics Retention Cohort — Unit #1","modelTitle":"Retention Cohort","ownerName":"Amira Al-Mansoor (Compliance Lead)","primaryAttrLabel":"Anchor Event Name","primaryAttrValue":"Anchor Event Name: RC-2026-501","secondaryAttrLabel":"Return Event Name","secondaryAttrValue":"Product Analytics Tier 1","metricLabel":"Retention Mode","metricValue":"92.4% (625.00 units)","operationalSummary":"periodCount bounded 1..36 intervals for deterministic interactive rendering.","invariantRule":"periodCount bounded 1..36 intervals for deterministic interactive rendering.","crossSuiteRef":"Optional segmentId -> DatBehavioralSegment.id; when weightByArr: true, joins Fin","updatedAt":"2026-05-10 09:15","contactPhone":"+14155550130","status":"N_DAY","moderationStage":"N_DAY","version":1,"isDeleted":false,"anchorEventName":"Anchor Event Name — RC-2026-501","returnEventName":"Return Event Name — RC-2026-501","retentionMode":"N_DAY","intervalUnit":"DAY","periodCount":"Period Count — RC-2026-501","weightByArr":"625.00","segmentId":"Segment — RC-2026-501","ownerUserId":"Owner User — RC-2026-501"},{"id":"00000000-0097-0005-0000-000000000002","recordCode":"RC-2026-502","title":"Product Analytics Retention Cohort — Unit #2","name":"Product Analytics Retention Cohort — Unit #2","modelTitle":"Retention Cohort","ownerName":"Noah Kowalski (Specialist)","primaryAttrLabel":"Anchor Event Name","primaryAttrValue":"Anchor Event Name: RC-2026-502","secondaryAttrLabel":"Return Event Name","secondaryAttrValue":"Product Analytics Tier 2","metricLabel":"Retention Mode","metricValue":"93.5% (672.50 units)","operationalSummary":"periodCount bounded 1..36 intervals for deterministic interactive rendering.","invariantRule":"periodCount bounded 1..36 intervals for deterministic interactive rendering.","crossSuiteRef":"Optional segmentId -> DatBehavioralSegment.id; when weightByArr: true, joins Fin","updatedAt":"2026-05-11 11:15","contactPhone":"+14155550131","status":"UNBOUNDED","moderationStage":"UNBOUNDED","version":2,"isDeleted":false,"anchorEventName":"Anchor Event Name — RC-2026-502","returnEventName":"Return Event Name — RC-2026-502","retentionMode":"UNBOUNDED","intervalUnit":"WEEK","periodCount":"Period Count — RC-2026-502","weightByArr":"672.50","segmentId":"Segment — RC-2026-502","ownerUserId":"Owner User — RC-2026-502"},{"id":"00000000-0097-0005-0000-000000000003","recordCode":"RC-2026-503","title":"Product Analytics Retention Cohort — Unit #3","name":"Product Analytics Retention Cohort — Unit #3","modelTitle":"Retention Cohort","ownerName":"Elena Rostova (Principal Lead)","primaryAttrLabel":"Anchor Event Name","primaryAttrValue":"Anchor Event Name: RC-2026-503","secondaryAttrLabel":"Return Event Name","secondaryAttrValue":"Product Analytics Tier 3","metricLabel":"Retention Mode","metricValue":"94.6% (720.00 units)","operationalSummary":"periodCount bounded 1..36 intervals for deterministic interactive rendering.","invariantRule":"periodCount bounded 1..36 intervals for deterministic interactive rendering.","crossSuiteRef":"Optional segmentId -> DatBehavioralSegment.id; when weightByArr: true, joins Fin","updatedAt":"2026-05-12 13:15","contactPhone":"+14155550132","status":"BRACKET","moderationStage":"BRACKET","version":3,"isDeleted":false,"anchorEventName":"Anchor Event Name — RC-2026-503","returnEventName":"Return Event Name — RC-2026-503","retentionMode":"BRACKET","intervalUnit":"MONTH","periodCount":"Period Count — RC-2026-503","weightByArr":"720.00","segmentId":"Segment — RC-2026-503","ownerUserId":"Owner User — RC-2026-503"},{"id":"00000000-0097-0005-0000-000000000004","recordCode":"RC-2026-504","title":"Product Analytics Retention Cohort — Unit #4","name":"Product Analytics Retention Cohort — Unit #4","modelTitle":"Retention Cohort","ownerName":"Marcus Vance (Senior Operations)","primaryAttrLabel":"Anchor Event Name","primaryAttrValue":"Anchor Event Name: RC-2026-504","secondaryAttrLabel":"Return Event Name","secondaryAttrValue":"Product Analytics Tier 1","metricLabel":"Retention Mode","metricValue":"95.7% (767.50 units)","operationalSummary":"periodCount bounded 1..36 intervals for deterministic interactive rendering.","invariantRule":"periodCount bounded 1..36 intervals for deterministic interactive rendering.","crossSuiteRef":"Optional segmentId -> DatBehavioralSegment.id; when weightByArr: true, joins Fin","updatedAt":"2026-05-13 15:15","contactPhone":"+14155550133","status":"N_DAY","moderationStage":"N_DAY","version":4,"isDeleted":false,"anchorEventName":"Anchor Event Name — RC-2026-504","returnEventName":"Return Event Name — RC-2026-504","retentionMode":"N_DAY","intervalUnit":"DAY","periodCount":"Period Count — RC-2026-504","weightByArr":"767.50","segmentId":"Segment — RC-2026-504","ownerUserId":"Owner User — RC-2026-504"},{"id":"00000000-0097-0005-0000-000000000005","recordCode":"RC-2026-505","title":"Product Analytics Retention Cohort — Unit #5","name":"Product Analytics Retention Cohort — Unit #5","modelTitle":"Retention Cohort","ownerName":"Sophia Laurent (Director)","primaryAttrLabel":"Anchor Event Name","primaryAttrValue":"Anchor Event Name: RC-2026-505","secondaryAttrLabel":"Return Event Name","secondaryAttrValue":"Product Analytics Tier 2","metricLabel":"Retention Mode","metricValue":"96.8% (815.00 units)","operationalSummary":"periodCount bounded 1..36 intervals for deterministic interactive rendering.","invariantRule":"periodCount bounded 1..36 intervals for deterministic interactive rendering.","crossSuiteRef":"Optional segmentId -> DatBehavioralSegment.id; when weightByArr: true, joins Fin","updatedAt":"2026-05-14 17:15","contactPhone":"+14155550134","status":"UNBOUNDED","moderationStage":"UNBOUNDED","version":5,"isDeleted":false,"anchorEventName":"Anchor Event Name — RC-2026-505","returnEventName":"Return Event Name — RC-2026-505","retentionMode":"UNBOUNDED","intervalUnit":"WEEK","periodCount":"Period Count — RC-2026-505","weightByArr":"815.00","segmentId":"Segment — RC-2026-505","ownerUserId":"Owner User — RC-2026-505"}],"DatUserPathAnalysis":[{"id":"00000000-0097-0006-0000-000000000001","recordCode":"UPA-2026-601","title":"Product Analytics User Path Analysis — Unit #1","name":"Product Analytics User Path Analysis — Unit #1","modelTitle":"User Path Analysis","ownerName":"Noah Kowalski (Specialist)","primaryAttrLabel":"Direction","primaryAttrValue":"Direction: UPA-2026-601","secondaryAttrLabel":"Anchor Event Name","secondaryAttrValue":"Product Analytics Tier 1","metricLabel":"Max Steps","metricValue":"92.5% (750.00 units)","operationalSummary":"maxSteps bounded 2..10 to prevent Sankey combinatorial explosion.","invariantRule":"maxSteps bounded 2..10 to prevent Sankey combinatorial explosion.","crossSuiteRef":"References DatEventPropertySchema.eventName.","updatedAt":"2026-05-10 09:15","contactPhone":"+14155550135","status":"FORWARD_FROM_START","moderationStage":"FORWARD_FROM_START","version":1,"isDeleted":false,"direction":"FORWARD_FROM_START","anchorEventName":"Anchor Event Name — UPA-2026-601","maxSteps":"Max Steps — UPA-2026-601","excludedEvents":"Excluded Events — UPA-2026-601","sessionTimeoutMinutes":"Session Timeout Minutes — UPA-2026-601","ownerUserId":"Owner User — UPA-2026-601"},{"id":"00000000-0097-0006-0000-000000000002","recordCode":"UPA-2026-602","title":"Product Analytics User Path Analysis — Unit #2","name":"Product Analytics User Path Analysis — Unit #2","modelTitle":"User Path Analysis","ownerName":"Elena Rostova (Principal Lead)","primaryAttrLabel":"Direction","primaryAttrValue":"Direction: UPA-2026-602","secondaryAttrLabel":"Anchor Event Name","secondaryAttrValue":"Product Analytics Tier 2","metricLabel":"Max Steps","metricValue":"93.6% (797.50 units)","operationalSummary":"maxSteps bounded 2..10 to prevent Sankey combinatorial explosion.","invariantRule":"maxSteps bounded 2..10 to prevent Sankey combinatorial explosion.","crossSuiteRef":"References DatEventPropertySchema.eventName.","updatedAt":"2026-05-11 11:15","contactPhone":"+14155550136","status":"REVERSE_BEFORE_END","moderationStage":"REVERSE_BEFORE_END","version":2,"isDeleted":false,"direction":"REVERSE_BEFORE_END","anchorEventName":"Anchor Event Name — UPA-2026-602","maxSteps":"Max Steps — UPA-2026-602","excludedEvents":"Excluded Events — UPA-2026-602","sessionTimeoutMinutes":"Session Timeout Minutes — UPA-2026-602","ownerUserId":"Owner User — UPA-2026-602"},{"id":"00000000-0097-0006-0000-000000000003","recordCode":"UPA-2026-603","title":"Product Analytics User Path Analysis — Unit #3","name":"Product Analytics User Path Analysis — Unit #3","modelTitle":"User Path Analysis","ownerName":"Marcus Vance (Senior Operations)","primaryAttrLabel":"Direction","primaryAttrValue":"Direction: UPA-2026-603","secondaryAttrLabel":"Anchor Event Name","secondaryAttrValue":"Product Analytics Tier 3","metricLabel":"Max Steps","metricValue":"94.7% (845.00 units)","operationalSummary":"maxSteps bounded 2..10 to prevent Sankey combinatorial explosion.","invariantRule":"maxSteps bounded 2..10 to prevent Sankey combinatorial explosion.","crossSuiteRef":"References DatEventPropertySchema.eventName.","updatedAt":"2026-05-12 13:15","contactPhone":"+14155550137","status":"FORWARD_FROM_START","moderationStage":"FORWARD_FROM_START","version":3,"isDeleted":false,"direction":"FORWARD_FROM_START","anchorEventName":"Anchor Event Name — UPA-2026-603","maxSteps":"Max Steps — UPA-2026-603","excludedEvents":"Excluded Events — UPA-2026-603","sessionTimeoutMinutes":"Session Timeout Minutes — UPA-2026-603","ownerUserId":"Owner User — UPA-2026-603"},{"id":"00000000-0097-0006-0000-000000000004","recordCode":"UPA-2026-604","title":"Product Analytics User Path Analysis — Unit #4","name":"Product Analytics User Path Analysis — Unit #4","modelTitle":"User Path Analysis","ownerName":"Sophia Laurent (Director)","primaryAttrLabel":"Direction","primaryAttrValue":"Direction: UPA-2026-604","secondaryAttrLabel":"Anchor Event Name","secondaryAttrValue":"Product Analytics Tier 1","metricLabel":"Max Steps","metricValue":"95.8% (892.50 units)","operationalSummary":"maxSteps bounded 2..10 to prevent Sankey combinatorial explosion.","invariantRule":"maxSteps bounded 2..10 to prevent Sankey combinatorial explosion.","crossSuiteRef":"References DatEventPropertySchema.eventName.","updatedAt":"2026-05-13 15:15","contactPhone":"+14155550138","status":"REVERSE_BEFORE_END","moderationStage":"REVERSE_BEFORE_END","version":4,"isDeleted":false,"direction":"REVERSE_BEFORE_END","anchorEventName":"Anchor Event Name — UPA-2026-604","maxSteps":"Max Steps — UPA-2026-604","excludedEvents":"Excluded Events — UPA-2026-604","sessionTimeoutMinutes":"Session Timeout Minutes — UPA-2026-604","ownerUserId":"Owner User — UPA-2026-604"},{"id":"00000000-0097-0006-0000-000000000005","recordCode":"UPA-2026-605","title":"Product Analytics User Path Analysis — Unit #5","name":"Product Analytics User Path Analysis — Unit #5","modelTitle":"User Path Analysis","ownerName":"Liam Chen (Systems Architect)","primaryAttrLabel":"Direction","primaryAttrValue":"Direction: UPA-2026-605","secondaryAttrLabel":"Anchor Event Name","secondaryAttrValue":"Product Analytics Tier 2","metricLabel":"Max Steps","metricValue":"96.0% (940.00 units)","operationalSummary":"maxSteps bounded 2..10 to prevent Sankey combinatorial explosion.","invariantRule":"maxSteps bounded 2..10 to prevent Sankey combinatorial explosion.","crossSuiteRef":"References DatEventPropertySchema.eventName.","updatedAt":"2026-05-14 17:15","contactPhone":"+14155550139","status":"FORWARD_FROM_START","moderationStage":"FORWARD_FROM_START","version":5,"isDeleted":false,"direction":"FORWARD_FROM_START","anchorEventName":"Anchor Event Name — UPA-2026-605","maxSteps":"Max Steps — UPA-2026-605","excludedEvents":"Excluded Events — UPA-2026-605","sessionTimeoutMinutes":"Session Timeout Minutes — UPA-2026-605","ownerUserId":"Owner User — UPA-2026-605"}],"DatBehavioralSegment":[{"id":"00000000-0097-0007-0000-000000000001","recordCode":"BS-2026-701","title":"Product Analytics Behavioral Segment — Unit #1","name":"Product Analytics Behavioral Segment — Unit #1","modelTitle":"Behavioral Segment","ownerName":"Elena Rostova (Principal Lead)","primaryAttrLabel":"Code","primaryAttrValue":"Code: BS-2026-701","secondaryAttrLabel":"Entity Scope","secondaryAttrValue":"USER","metricLabel":"Criteria Ast Json","metricValue":"92.6% (875.00 units)","operationalSummary":"code unique. Dynamic segments recompute incrementally and emit idempotent membership delta events.","invariantRule":"code unique. Dynamic segments recompute incrementally and emit idempotent membership delta events.","crossSuiteRef":"Emits membership deltas referencing CrmContact.id / CrmAccount.id.","updatedAt":"2026-05-10 09:15","contactPhone":"+14155550140","status":"USER","moderationStage":"USER","version":1,"isDeleted":false,"code":"Code — BS-2026-701","entityScope":"USER","criteriaAstJson":"Criteria Ast Json — BS-2026-701","memberCount":"Member Count — BS-2026-701","engagementScoreAvg":"875.00","syncDestinations":"MKT","lastComputedAt":"Last Computed At — BS-2026-701","isDynamic":true},{"id":"00000000-0097-0007-0000-000000000002","recordCode":"BS-2026-702","title":"Product Analytics Behavioral Segment — Unit #2","name":"Product Analytics Behavioral Segment — Unit #2","modelTitle":"Behavioral Segment","ownerName":"Marcus Vance (Senior Operations)","primaryAttrLabel":"Code","primaryAttrValue":"Code: BS-2026-702","secondaryAttrLabel":"Entity Scope","secondaryAttrValue":"B2B_ACCOUNT","metricLabel":"Criteria Ast Json","metricValue":"93.7% (922.50 units)","operationalSummary":"code unique. Dynamic segments recompute incrementally and emit idempotent membership delta events.","invariantRule":"code unique. Dynamic segments recompute incrementally and emit idempotent membership delta events.","crossSuiteRef":"Emits membership deltas referencing CrmContact.id / CrmAccount.id.","updatedAt":"2026-05-11 11:15","contactPhone":"+14155550141","status":"B2B_ACCOUNT","moderationStage":"B2B_ACCOUNT","version":2,"isDeleted":false,"code":"Code — BS-2026-702","entityScope":"B2B_ACCOUNT","criteriaAstJson":"Criteria Ast Json — BS-2026-702","memberCount":"Member Count — BS-2026-702","engagementScoreAvg":"922.50","syncDestinations":"CRM","lastComputedAt":"Last Computed At — BS-2026-702","isDynamic":false},{"id":"00000000-0097-0007-0000-000000000003","recordCode":"BS-2026-703","title":"Product Analytics Behavioral Segment — Unit #3","name":"Product Analytics Behavioral Segment — Unit #3","modelTitle":"Behavioral Segment","ownerName":"Sophia Laurent (Director)","primaryAttrLabel":"Code","primaryAttrValue":"Code: BS-2026-703","secondaryAttrLabel":"Entity Scope","secondaryAttrValue":"USER","metricLabel":"Criteria Ast Json","metricValue":"94.8% (970.00 units)","operationalSummary":"code unique. Dynamic segments recompute incrementally and emit idempotent membership delta events.","invariantRule":"code unique. Dynamic segments recompute incrementally and emit idempotent membership delta events.","crossSuiteRef":"Emits membership deltas referencing CrmContact.id / CrmAccount.id.","updatedAt":"2026-05-12 13:15","contactPhone":"+14155550142","status":"USER","moderationStage":"USER","version":3,"isDeleted":false,"code":"Code — BS-2026-703","entityScope":"USER","criteriaAstJson":"Criteria Ast Json — BS-2026-703","memberCount":"Member Count — BS-2026-703","engagementScoreAvg":"970.00","syncDestinations":"SUP","lastComputedAt":"Last Computed At — BS-2026-703","isDynamic":true},{"id":"00000000-0097-0007-0000-000000000004","recordCode":"BS-2026-704","title":"Product Analytics Behavioral Segment — Unit #4","name":"Product Analytics Behavioral Segment — Unit #4","modelTitle":"Behavioral Segment","ownerName":"Liam Chen (Systems Architect)","primaryAttrLabel":"Code","primaryAttrValue":"Code: BS-2026-704","secondaryAttrLabel":"Entity Scope","secondaryAttrValue":"B2B_ACCOUNT","metricLabel":"Criteria Ast Json","metricValue":"95.0% (1017.50 units)","operationalSummary":"code unique. Dynamic segments recompute incrementally and emit idempotent membership delta events.","invariantRule":"code unique. Dynamic segments recompute incrementally and emit idempotent membership delta events.","crossSuiteRef":"Emits membership deltas referencing CrmContact.id / CrmAccount.id.","updatedAt":"2026-05-13 15:15","contactPhone":"+14155550143","status":"B2B_ACCOUNT","moderationStage":"B2B_ACCOUNT","version":4,"isDeleted":false,"code":"Code — BS-2026-704","entityScope":"B2B_ACCOUNT","criteriaAstJson":"Criteria Ast Json — BS-2026-704","memberCount":"Member Count — BS-2026-704","engagementScoreAvg":"1017.50","syncDestinations":"WAREHOUSE","lastComputedAt":"Last Computed At — BS-2026-704","isDynamic":false},{"id":"00000000-0097-0007-0000-000000000005","recordCode":"BS-2026-705","title":"Product Analytics Behavioral Segment — Unit #5","name":"Product Analytics Behavioral Segment — Unit #5","modelTitle":"Behavioral Segment","ownerName":"Amira Al-Mansoor (Compliance Lead)","primaryAttrLabel":"Code","primaryAttrValue":"Code: BS-2026-705","secondaryAttrLabel":"Entity Scope","secondaryAttrValue":"USER","metricLabel":"Criteria Ast Json","metricValue":"96.1% (1065.00 units)","operationalSummary":"code unique. Dynamic segments recompute incrementally and emit idempotent membership delta events.","invariantRule":"code unique. Dynamic segments recompute incrementally and emit idempotent membership delta events.","crossSuiteRef":"Emits membership deltas referencing CrmContact.id / CrmAccount.id.","updatedAt":"2026-05-14 17:15","contactPhone":"+14155550144","status":"USER","moderationStage":"USER","version":5,"isDeleted":false,"code":"Code — BS-2026-705","entityScope":"USER","criteriaAstJson":"Criteria Ast Json — BS-2026-705","memberCount":"Member Count — BS-2026-705","engagementScoreAvg":"1065.00","syncDestinations":"MKT","lastComputedAt":"Last Computed At — BS-2026-705","isDynamic":true}],"DatExperimentImpactReport":[{"id":"00000000-0097-0008-0000-000000000001","recordCode":"EIR-2026-801","title":"Product Analytics Experiment Impact Report — Unit #1","name":"Product Analytics Experiment Impact Report — Unit #1","modelTitle":"Experiment Impact Report","ownerName":"Marcus Vance (Senior Operations)","primaryAttrLabel":"Experiment Key","primaryAttrValue":"Experiment Key: EIR-2026-801","secondaryAttrLabel":"Exposure Event Name","secondaryAttrValue":"Product Analytics Tier 1","metricLabel":"Variant Property","metricValue":"92.7% (1000.00 units)","operationalSummary":"Flags invalid conclusions automatically whenever Sample Ratio Mismatch (srmPassed === false) is detected.","invariantRule":"Flags invalid conclusions automatically whenever Sample Ratio Mismatch (srmPassed === false) is detected.","crossSuiteRef":"primaryMetricFunnelId -> DatFunnelDefinition.id.","updatedAt":"2026-05-10 09:15","contactPhone":"+14155550145","status":"RUNNING","moderationStage":"RUNNING","version":1,"isDeleted":false,"experimentKey":"Experiment Key — EIR-2026-801","exposureEventName":"Exposure Event Name — EIR-2026-801","variantProperty":"Variant Property — EIR-2026-801","primaryMetricFunnelId":"Primary Metric Funnel — EIR-2026-801","guardrailEvents":"Guardrail Events — EIR-2026-801","confidenceLevel":"Confidence Level — EIR-2026-801","srmPassed":"Srm Passed — EIR-2026-801","summaryJson":"Summary Json — EIR-2026-801"},{"id":"00000000-0097-0008-0000-000000000002","recordCode":"EIR-2026-802","title":"Product Analytics Experiment Impact Report — Unit #2","name":"Product Analytics Experiment Impact Report — Unit #2","modelTitle":"Experiment Impact Report","ownerName":"Sophia Laurent (Director)","primaryAttrLabel":"Experiment Key","primaryAttrValue":"Experiment Key: EIR-2026-802","secondaryAttrLabel":"Exposure Event Name","secondaryAttrValue":"Product Analytics Tier 2","metricLabel":"Variant Property","metricValue":"93.8% (1047.50 units)","operationalSummary":"Flags invalid conclusions automatically whenever Sample Ratio Mismatch (srmPassed === false) is detected.","invariantRule":"Flags invalid conclusions automatically whenever Sample Ratio Mismatch (srmPassed === false) is detected.","crossSuiteRef":"primaryMetricFunnelId -> DatFunnelDefinition.id.","updatedAt":"2026-05-11 11:15","contactPhone":"+14155550146","status":"CONCLUDED","moderationStage":"CONCLUDED","version":2,"isDeleted":false,"experimentKey":"Experiment Key — EIR-2026-802","exposureEventName":"Exposure Event Name — EIR-2026-802","variantProperty":"Variant Property — EIR-2026-802","primaryMetricFunnelId":"Primary Metric Funnel — EIR-2026-802","guardrailEvents":"Guardrail Events — EIR-2026-802","confidenceLevel":"Confidence Level — EIR-2026-802","srmPassed":"Srm Passed — EIR-2026-802","summaryJson":"Summary Json — EIR-2026-802"},{"id":"00000000-0097-0008-0000-000000000003","recordCode":"EIR-2026-803","title":"Product Analytics Experiment Impact Report — Unit #3","name":"Product Analytics Experiment Impact Report — Unit #3","modelTitle":"Experiment Impact Report","ownerName":"Liam Chen (Systems Architect)","primaryAttrLabel":"Experiment Key","primaryAttrValue":"Experiment Key: EIR-2026-803","secondaryAttrLabel":"Exposure Event Name","secondaryAttrValue":"Product Analytics Tier 3","metricLabel":"Variant Property","metricValue":"94.0% (1095.00 units)","operationalSummary":"Flags invalid conclusions automatically whenever Sample Ratio Mismatch (srmPassed === false) is detected.","invariantRule":"Flags invalid conclusions automatically whenever Sample Ratio Mismatch (srmPassed === false) is detected.","crossSuiteRef":"primaryMetricFunnelId -> DatFunnelDefinition.id.","updatedAt":"2026-05-12 13:15","contactPhone":"+14155550147","status":"ARCHIVED","moderationStage":"ARCHIVED","version":3,"isDeleted":false,"experimentKey":"Experiment Key — EIR-2026-803","exposureEventName":"Exposure Event Name — EIR-2026-803","variantProperty":"Variant Property — EIR-2026-803","primaryMetricFunnelId":"Primary Metric Funnel — EIR-2026-803","guardrailEvents":"Guardrail Events — EIR-2026-803","confidenceLevel":"Confidence Level — EIR-2026-803","srmPassed":"Srm Passed — EIR-2026-803","summaryJson":"Summary Json — EIR-2026-803"},{"id":"00000000-0097-0008-0000-000000000004","recordCode":"EIR-2026-804","title":"Product Analytics Experiment Impact Report — Unit #4","name":"Product Analytics Experiment Impact Report — Unit #4","modelTitle":"Experiment Impact Report","ownerName":"Amira Al-Mansoor (Compliance Lead)","primaryAttrLabel":"Experiment Key","primaryAttrValue":"Experiment Key: EIR-2026-804","secondaryAttrLabel":"Exposure Event Name","secondaryAttrValue":"Product Analytics Tier 1","metricLabel":"Variant Property","metricValue":"95.1% (1142.50 units)","operationalSummary":"Flags invalid conclusions automatically whenever Sample Ratio Mismatch (srmPassed === false) is detected.","invariantRule":"Flags invalid conclusions automatically whenever Sample Ratio Mismatch (srmPassed === false) is detected.","crossSuiteRef":"primaryMetricFunnelId -> DatFunnelDefinition.id.","updatedAt":"2026-05-13 15:15","contactPhone":"+14155550148","status":"RUNNING","moderationStage":"RUNNING","version":4,"isDeleted":false,"experimentKey":"Experiment Key — EIR-2026-804","exposureEventName":"Exposure Event Name — EIR-2026-804","variantProperty":"Variant Property — EIR-2026-804","primaryMetricFunnelId":"Primary Metric Funnel — EIR-2026-804","guardrailEvents":"Guardrail Events — EIR-2026-804","confidenceLevel":"Confidence Level — EIR-2026-804","srmPassed":"Srm Passed — EIR-2026-804","summaryJson":"Summary Json — EIR-2026-804"},{"id":"00000000-0097-0008-0000-000000000005","recordCode":"EIR-2026-805","title":"Product Analytics Experiment Impact Report — Unit #5","name":"Product Analytics Experiment Impact Report — Unit #5","modelTitle":"Experiment Impact Report","ownerName":"Noah Kowalski (Specialist)","primaryAttrLabel":"Experiment Key","primaryAttrValue":"Experiment Key: EIR-2026-805","secondaryAttrLabel":"Exposure Event Name","secondaryAttrValue":"Product Analytics Tier 2","metricLabel":"Variant Property","metricValue":"96.2% (1190.00 units)","operationalSummary":"Flags invalid conclusions automatically whenever Sample Ratio Mismatch (srmPassed === false) is detected.","invariantRule":"Flags invalid conclusions automatically whenever Sample Ratio Mismatch (srmPassed === false) is detected.","crossSuiteRef":"primaryMetricFunnelId -> DatFunnelDefinition.id.","updatedAt":"2026-05-14 17:15","contactPhone":"+14155550149","status":"CONCLUDED","moderationStage":"CONCLUDED","version":5,"isDeleted":false,"experimentKey":"Experiment Key — EIR-2026-805","exposureEventName":"Exposure Event Name — EIR-2026-805","variantProperty":"Variant Property — EIR-2026-805","primaryMetricFunnelId":"Primary Metric Funnel — EIR-2026-805","guardrailEvents":"Guardrail Events — EIR-2026-805","confidenceLevel":"Confidence Level — EIR-2026-805","srmPassed":"Srm Passed — EIR-2026-805","summaryJson":"Summary Json — EIR-2026-805"}]};
+
+    window.loadEntitySWR = async function(entityName, onUpdate) {
+      var fallback = (window.SEED_DATA && window.SEED_DATA[entityName]) ? window.SEED_DATA[entityName].slice() : [];
+      try {
+        if (window.rapiderApi && typeof window.rapiderApi.findSWR === 'function') {
+          var res = await window.rapiderApi.findSWR(entityName, {}, function(fresh) {
+            if (Array.isArray(fresh) && fresh.length > 0) {
+              onUpdate(fresh.filter(function(r) { return r && r.isDeleted !== true; }));
+            }
+          });
+          var arr = Array.isArray(res) ? res : (res && Array.isArray(res.data) ? res.data : []);
+          var clean = arr.filter(function(r) { return r && r.isDeleted !== true; });
+          onUpdate(clean.length > 0 ? clean : fallback);
+          return;
+        }
+      } catch (_) {}
+      onUpdate(fallback);
+    };
+
+
+      var rows_4 = [];
+      function renderLedger_4() {
+        var q = (document.getElementById('ledgerSearch_4').value || '').trim().toLowerCase();
+        var st = document.getElementById('ledgerStatus_4').value;
+        var bar = document.getElementById('activeFilterTagsBar');
+        var chips = [];
+        if (q) chips.push('<span class="filter-chip">Search: "' + esc(q) + '" <button type="button" onclick="document.getElementById(\'ledgerSearch_4\').value=\'\';renderLedger_4();">✕</button></span>');
+        if (st !== 'ALL') chips.push('<span class="filter-chip">Status: "' + esc(st) + '" <button type="button" onclick="document.getElementById(\'ledgerStatus_4\').value=\'ALL\';renderLedger_4();">✕</button></span>');
+        if (chips.length > 0) {
+          bar.style.display = 'flex';
+          bar.innerHTML = '<span style="font-weight:700;color:var(--muted);font-size:11px;text-transform:uppercase;">Active:</span> ' + chips.join(' ') + ' <button type="button" class="btn small" style="margin-left:auto;" onclick="document.getElementById(\'ledgerSearch_4\').value=\'\';document.getElementById(\'ledgerStatus_4\').value=\'ALL\';renderLedger_4();"><i class="fas fa-times-circle"></i> Clear all</button>';
+        } else {
+          bar.style.display = 'none';
+          bar.innerHTML = '';
+        }
+        var filtered = rows_4.filter(function(r) {
+          var mQ = !q || JSON.stringify(r).toLowerCase().indexOf(q) !== -1;
+          var mSt = st === 'ALL' || r.status === st;
+          return mQ && mSt;
+        });
+        document.getElementById('ledgerCount_4').textContent = filtered.length + ' Records';
+        document.getElementById('ledgerRows_4').innerHTML = filtered.map(function(r) {
+          return '<tr>' +
+            '<td><a href="#/funnel-detail?id=' + esc(r.id) + '" class="primary-link">' + esc(r.recordCode) + '</a><div style="font-size:11px;color:var(--muted);">' + esc(r.updatedAt) + '</div></td>' +
+            '<td><a href="#/funnel-detail?id=' + esc(r.id) + '" class="primary-link">' + esc(r.title) + '</a><div style="font-size:12px;color:var(--muted);margin-top:2px;">' + esc(r.operationalSummary) + '</div></td>' +
+            '<td><span class="badge purple">' + esc(r.secondaryAttrValue) + '</span></td>' +
+            '<td><strong>' + esc(r.metricValue) + '</strong></td>' +
+            '<td><div style="font-size:12px;font-weight:600;">' + esc(r.ownerName) + '</div><div style="font-size:11px;color:var(--muted);">' + esc(r.crossSuiteRef) + '</div></td>' +
+            '<td><span class="badge green">' + esc(r.status) + '</span></td>' +
+            '<td style="white-space:nowrap;">' +
+              '<a href="#/segment-funnel-drawer?id=' + esc(r.id) + '" class="btn small"><i class="fas fa-edit mr-1"></i>Edit</a> ' +
+              '<button type="button" class="btn icon-only" title="Delete" aria-label="Delete" onclick="deleteLedgerRow_4(\'' + esc(r.id) + '\', \'' + esc(r.recordCode) + '\')"><i class="fas fa-trash-alt"></i></button>' +
+            '</td>' +
+          '</tr>';
+        }).join('');
+      }
+      window.deleteLedgerRow_4 = function(id, code) {
+        window.showConfirmModal('Remove Behavioral Segment', 'Soft-delete ' + code + ' from Behavioral Cohorts?', async function() {
+          if (window.rapiderApi && typeof window.rapiderApi.delete === 'function') {
+            await window.rapiderApi.delete('DatBehavioralSegment', id);
+          }
+          rows_4 = rows_4.filter(function(r) { return r.id !== id; });
+          renderLedger_4();
+          window.toast('Archived ' + code, 'info');
+        });
+      };
+      document.getElementById('ledgerSearch_4').addEventListener('input', renderLedger_4);
+      document.getElementById('ledgerStatus_4').addEventListener('change', renderLedger_4);
+      window.loadEntitySWR('DatBehavioralSegment', function(rows) { rows_4 = rows; renderLedger_4(); });
+    
+  </script>
 </body>
 </html>

@@ -2222,6 +2222,134 @@
           "isHidden": false,
           "isArray": false,
           "default": false
+        },
+        {
+          "name": "recordCode",
+          "type": "string",
+          "description": "recordCode attribute for DatTelemetrySource",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "description": "title attribute for DatTelemetrySource",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "modelTitle",
+          "type": "string",
+          "description": "modelTitle attribute for DatTelemetrySource",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "ownerName",
+          "type": "string",
+          "description": "ownerName attribute for DatTelemetrySource",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "primaryAttrLabel",
+          "type": "string",
+          "description": "primaryAttrLabel attribute for DatTelemetrySource",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "primaryAttrValue",
+          "type": "string",
+          "description": "primaryAttrValue attribute for DatTelemetrySource",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "secondaryAttrLabel",
+          "type": "string",
+          "description": "secondaryAttrLabel attribute for DatTelemetrySource",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "secondaryAttrValue",
+          "type": "string",
+          "description": "secondaryAttrValue attribute for DatTelemetrySource",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "metricLabel",
+          "type": "string",
+          "description": "metricLabel attribute for DatTelemetrySource",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "metricValue",
+          "type": "string",
+          "description": "metricValue attribute for DatTelemetrySource",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "operationalSummary",
+          "type": "string",
+          "description": "operationalSummary attribute for DatTelemetrySource",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "invariantRule",
+          "type": "string",
+          "description": "invariantRule attribute for DatTelemetrySource",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "crossSuiteRef",
+          "type": "string",
+          "description": "crossSuiteRef attribute for DatTelemetrySource",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "updatedAt",
+          "type": "string",
+          "description": "updatedAt attribute for DatTelemetrySource",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "contactPhone",
+          "type": "string",
+          "description": "contactPhone attribute for DatTelemetrySource",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "moderationStage",
+          "type": "string",
+          "description": "moderationStage attribute for DatTelemetrySource",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
         }
       ],
       "relations": []
@@ -2414,6 +2542,142 @@
           "isHidden": false,
           "isArray": false,
           "default": false
+        },
+        {
+          "name": "recordCode",
+          "type": "string",
+          "description": "recordCode attribute for DatEventPropertySchema",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "description": "title attribute for DatEventPropertySchema",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "description": "name attribute for DatEventPropertySchema",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "modelTitle",
+          "type": "string",
+          "description": "modelTitle attribute for DatEventPropertySchema",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "ownerName",
+          "type": "string",
+          "description": "ownerName attribute for DatEventPropertySchema",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "primaryAttrLabel",
+          "type": "string",
+          "description": "primaryAttrLabel attribute for DatEventPropertySchema",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "primaryAttrValue",
+          "type": "string",
+          "description": "primaryAttrValue attribute for DatEventPropertySchema",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "secondaryAttrLabel",
+          "type": "string",
+          "description": "secondaryAttrLabel attribute for DatEventPropertySchema",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "secondaryAttrValue",
+          "type": "string",
+          "description": "secondaryAttrValue attribute for DatEventPropertySchema",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "metricLabel",
+          "type": "string",
+          "description": "metricLabel attribute for DatEventPropertySchema",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "metricValue",
+          "type": "string",
+          "description": "metricValue attribute for DatEventPropertySchema",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "operationalSummary",
+          "type": "string",
+          "description": "operationalSummary attribute for DatEventPropertySchema",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "invariantRule",
+          "type": "string",
+          "description": "invariantRule attribute for DatEventPropertySchema",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "crossSuiteRef",
+          "type": "string",
+          "description": "crossSuiteRef attribute for DatEventPropertySchema",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "updatedAt",
+          "type": "string",
+          "description": "updatedAt attribute for DatEventPropertySchema",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "contactPhone",
+          "type": "string",
+          "description": "contactPhone attribute for DatEventPropertySchema",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "moderationStage",
+          "type": "string",
+          "description": "moderationStage attribute for DatEventPropertySchema",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
         }
       ],
       "relations": []
@@ -2615,6 +2879,150 @@
           "isHidden": false,
           "isArray": false,
           "default": false
+        },
+        {
+          "name": "recordCode",
+          "type": "string",
+          "description": "recordCode attribute for DatTrackedEvent",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "description": "title attribute for DatTrackedEvent",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "description": "name attribute for DatTrackedEvent",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "modelTitle",
+          "type": "string",
+          "description": "modelTitle attribute for DatTrackedEvent",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "ownerName",
+          "type": "string",
+          "description": "ownerName attribute for DatTrackedEvent",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "primaryAttrLabel",
+          "type": "string",
+          "description": "primaryAttrLabel attribute for DatTrackedEvent",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "primaryAttrValue",
+          "type": "string",
+          "description": "primaryAttrValue attribute for DatTrackedEvent",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "secondaryAttrLabel",
+          "type": "string",
+          "description": "secondaryAttrLabel attribute for DatTrackedEvent",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "secondaryAttrValue",
+          "type": "string",
+          "description": "secondaryAttrValue attribute for DatTrackedEvent",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "metricLabel",
+          "type": "string",
+          "description": "metricLabel attribute for DatTrackedEvent",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "metricValue",
+          "type": "string",
+          "description": "metricValue attribute for DatTrackedEvent",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "operationalSummary",
+          "type": "string",
+          "description": "operationalSummary attribute for DatTrackedEvent",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "invariantRule",
+          "type": "string",
+          "description": "invariantRule attribute for DatTrackedEvent",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "crossSuiteRef",
+          "type": "string",
+          "description": "crossSuiteRef attribute for DatTrackedEvent",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "updatedAt",
+          "type": "string",
+          "description": "updatedAt attribute for DatTrackedEvent",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "contactPhone",
+          "type": "string",
+          "description": "contactPhone attribute for DatTrackedEvent",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "moderationStage",
+          "type": "string",
+          "description": "moderationStage attribute for DatTrackedEvent",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "version",
+          "type": "number",
+          "description": "version attribute for DatTrackedEvent",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
         }
       ],
       "relations": [
@@ -2823,6 +3231,134 @@
           "isHidden": false,
           "isArray": false,
           "default": false
+        },
+        {
+          "name": "recordCode",
+          "type": "string",
+          "description": "recordCode attribute for DatFunnelDefinition",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "description": "title attribute for DatFunnelDefinition",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "modelTitle",
+          "type": "string",
+          "description": "modelTitle attribute for DatFunnelDefinition",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "ownerName",
+          "type": "string",
+          "description": "ownerName attribute for DatFunnelDefinition",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "primaryAttrLabel",
+          "type": "string",
+          "description": "primaryAttrLabel attribute for DatFunnelDefinition",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "primaryAttrValue",
+          "type": "string",
+          "description": "primaryAttrValue attribute for DatFunnelDefinition",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "secondaryAttrLabel",
+          "type": "string",
+          "description": "secondaryAttrLabel attribute for DatFunnelDefinition",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "secondaryAttrValue",
+          "type": "string",
+          "description": "secondaryAttrValue attribute for DatFunnelDefinition",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "metricLabel",
+          "type": "string",
+          "description": "metricLabel attribute for DatFunnelDefinition",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "metricValue",
+          "type": "string",
+          "description": "metricValue attribute for DatFunnelDefinition",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "operationalSummary",
+          "type": "string",
+          "description": "operationalSummary attribute for DatFunnelDefinition",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "invariantRule",
+          "type": "string",
+          "description": "invariantRule attribute for DatFunnelDefinition",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "crossSuiteRef",
+          "type": "string",
+          "description": "crossSuiteRef attribute for DatFunnelDefinition",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "updatedAt",
+          "type": "string",
+          "description": "updatedAt attribute for DatFunnelDefinition",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "contactPhone",
+          "type": "string",
+          "description": "contactPhone attribute for DatFunnelDefinition",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "moderationStage",
+          "type": "string",
+          "description": "moderationStage attribute for DatFunnelDefinition",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
         }
       ],
       "relations": []
@@ -3021,6 +3557,134 @@
           "isHidden": false,
           "isArray": false,
           "default": false
+        },
+        {
+          "name": "recordCode",
+          "type": "string",
+          "description": "recordCode attribute for DatRetentionCohort",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "description": "title attribute for DatRetentionCohort",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "modelTitle",
+          "type": "string",
+          "description": "modelTitle attribute for DatRetentionCohort",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "ownerName",
+          "type": "string",
+          "description": "ownerName attribute for DatRetentionCohort",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "primaryAttrLabel",
+          "type": "string",
+          "description": "primaryAttrLabel attribute for DatRetentionCohort",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "primaryAttrValue",
+          "type": "string",
+          "description": "primaryAttrValue attribute for DatRetentionCohort",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "secondaryAttrLabel",
+          "type": "string",
+          "description": "secondaryAttrLabel attribute for DatRetentionCohort",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "secondaryAttrValue",
+          "type": "string",
+          "description": "secondaryAttrValue attribute for DatRetentionCohort",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "metricLabel",
+          "type": "string",
+          "description": "metricLabel attribute for DatRetentionCohort",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "metricValue",
+          "type": "string",
+          "description": "metricValue attribute for DatRetentionCohort",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "operationalSummary",
+          "type": "string",
+          "description": "operationalSummary attribute for DatRetentionCohort",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "invariantRule",
+          "type": "string",
+          "description": "invariantRule attribute for DatRetentionCohort",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "crossSuiteRef",
+          "type": "string",
+          "description": "crossSuiteRef attribute for DatRetentionCohort",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "updatedAt",
+          "type": "string",
+          "description": "updatedAt attribute for DatRetentionCohort",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "contactPhone",
+          "type": "string",
+          "description": "contactPhone attribute for DatRetentionCohort",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "moderationStage",
+          "type": "string",
+          "description": "moderationStage attribute for DatRetentionCohort",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
         }
       ],
       "relations": [
@@ -3201,6 +3865,134 @@
           "isHidden": false,
           "isArray": false,
           "default": false
+        },
+        {
+          "name": "recordCode",
+          "type": "string",
+          "description": "recordCode attribute for DatUserPathAnalysis",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "description": "title attribute for DatUserPathAnalysis",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "modelTitle",
+          "type": "string",
+          "description": "modelTitle attribute for DatUserPathAnalysis",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "ownerName",
+          "type": "string",
+          "description": "ownerName attribute for DatUserPathAnalysis",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "primaryAttrLabel",
+          "type": "string",
+          "description": "primaryAttrLabel attribute for DatUserPathAnalysis",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "primaryAttrValue",
+          "type": "string",
+          "description": "primaryAttrValue attribute for DatUserPathAnalysis",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "secondaryAttrLabel",
+          "type": "string",
+          "description": "secondaryAttrLabel attribute for DatUserPathAnalysis",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "secondaryAttrValue",
+          "type": "string",
+          "description": "secondaryAttrValue attribute for DatUserPathAnalysis",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "metricLabel",
+          "type": "string",
+          "description": "metricLabel attribute for DatUserPathAnalysis",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "metricValue",
+          "type": "string",
+          "description": "metricValue attribute for DatUserPathAnalysis",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "operationalSummary",
+          "type": "string",
+          "description": "operationalSummary attribute for DatUserPathAnalysis",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "invariantRule",
+          "type": "string",
+          "description": "invariantRule attribute for DatUserPathAnalysis",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "crossSuiteRef",
+          "type": "string",
+          "description": "crossSuiteRef attribute for DatUserPathAnalysis",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "updatedAt",
+          "type": "string",
+          "description": "updatedAt attribute for DatUserPathAnalysis",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "contactPhone",
+          "type": "string",
+          "description": "contactPhone attribute for DatUserPathAnalysis",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "moderationStage",
+          "type": "string",
+          "description": "moderationStage attribute for DatUserPathAnalysis",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
         }
       ],
       "relations": []
@@ -3388,6 +4180,134 @@
           "isHidden": false,
           "isArray": false,
           "default": false
+        },
+        {
+          "name": "recordCode",
+          "type": "string",
+          "description": "recordCode attribute for DatBehavioralSegment",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "description": "title attribute for DatBehavioralSegment",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "modelTitle",
+          "type": "string",
+          "description": "modelTitle attribute for DatBehavioralSegment",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "ownerName",
+          "type": "string",
+          "description": "ownerName attribute for DatBehavioralSegment",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "primaryAttrLabel",
+          "type": "string",
+          "description": "primaryAttrLabel attribute for DatBehavioralSegment",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "primaryAttrValue",
+          "type": "string",
+          "description": "primaryAttrValue attribute for DatBehavioralSegment",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "secondaryAttrLabel",
+          "type": "string",
+          "description": "secondaryAttrLabel attribute for DatBehavioralSegment",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "secondaryAttrValue",
+          "type": "string",
+          "description": "secondaryAttrValue attribute for DatBehavioralSegment",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "metricLabel",
+          "type": "string",
+          "description": "metricLabel attribute for DatBehavioralSegment",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "metricValue",
+          "type": "string",
+          "description": "metricValue attribute for DatBehavioralSegment",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "operationalSummary",
+          "type": "string",
+          "description": "operationalSummary attribute for DatBehavioralSegment",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "invariantRule",
+          "type": "string",
+          "description": "invariantRule attribute for DatBehavioralSegment",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "crossSuiteRef",
+          "type": "string",
+          "description": "crossSuiteRef attribute for DatBehavioralSegment",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "updatedAt",
+          "type": "string",
+          "description": "updatedAt attribute for DatBehavioralSegment",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "contactPhone",
+          "type": "string",
+          "description": "contactPhone attribute for DatBehavioralSegment",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "moderationStage",
+          "type": "string",
+          "description": "moderationStage attribute for DatBehavioralSegment",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
         }
       ],
       "relations": []
@@ -3576,6 +4496,134 @@
           "isHidden": false,
           "isArray": false,
           "default": false
+        },
+        {
+          "name": "recordCode",
+          "type": "string",
+          "description": "recordCode attribute for DatExperimentImpactReport",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "description": "title attribute for DatExperimentImpactReport",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "modelTitle",
+          "type": "string",
+          "description": "modelTitle attribute for DatExperimentImpactReport",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "ownerName",
+          "type": "string",
+          "description": "ownerName attribute for DatExperimentImpactReport",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "primaryAttrLabel",
+          "type": "string",
+          "description": "primaryAttrLabel attribute for DatExperimentImpactReport",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "primaryAttrValue",
+          "type": "string",
+          "description": "primaryAttrValue attribute for DatExperimentImpactReport",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "secondaryAttrLabel",
+          "type": "string",
+          "description": "secondaryAttrLabel attribute for DatExperimentImpactReport",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "secondaryAttrValue",
+          "type": "string",
+          "description": "secondaryAttrValue attribute for DatExperimentImpactReport",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "metricLabel",
+          "type": "string",
+          "description": "metricLabel attribute for DatExperimentImpactReport",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "metricValue",
+          "type": "string",
+          "description": "metricValue attribute for DatExperimentImpactReport",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "operationalSummary",
+          "type": "string",
+          "description": "operationalSummary attribute for DatExperimentImpactReport",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "invariantRule",
+          "type": "string",
+          "description": "invariantRule attribute for DatExperimentImpactReport",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "crossSuiteRef",
+          "type": "string",
+          "description": "crossSuiteRef attribute for DatExperimentImpactReport",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "updatedAt",
+          "type": "string",
+          "description": "updatedAt attribute for DatExperimentImpactReport",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "contactPhone",
+          "type": "string",
+          "description": "contactPhone attribute for DatExperimentImpactReport",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
+        },
+        {
+          "name": "moderationStage",
+          "type": "string",
+          "description": "moderationStage attribute for DatExperimentImpactReport",
+          "isRequired": false,
+          "isHidden": false,
+          "isArray": false
         }
       ],
       "relations": [
@@ -3597,133 +4645,181 @@
       "name": "Engagement Pulse Hub",
       "route": "product-overview",
       "htmlFilePath": "pages/product-overview/product-overview.html",
-      "title": "Engagement Pulse Hub",
+      "title": "Product Insights",
       "group": "Product Insights",
       "icon": "fas fa-chart-bar",
       "displayInMenu": true,
       "order": 1,
-      "developmentDetails": "DAU/WAU/MAU stickiness ribbon, Product Engagement Score (PES), release marker timeline, #activeFilterTagsBar, \"Ask Product Analytics\" launcher."
+      "developmentDetails": "DAU/WAU/MAU stickiness ribbon, Product Engagement Score (PES), release marker timeline, #activeFilterTagsBar, \"Ask Product Analytics\" launcher.",
+      "pageTitle": "Engagement Pulse Hub",
+      "type": "AppPage",
+      "displayOnMenu": true,
+      "description": "DAU/WAU/MAU stickiness ribbon, Product Engagement Score (PES), release marker timeline, #activeFilterTagsBar, \"Ask Product Analytics\" launcher."
     },
     {
       "name": "Conversion Funnels",
       "route": "funnels",
       "htmlFilePath": "pages/funnels/funnels.html",
-      "title": "Conversion Funnels",
+      "title": "Product Insights",
       "group": "Product Insights",
       "icon": "fas fa-chart-bar",
       "displayInMenu": true,
       "order": 2,
-      "developmentDetails": "findSWR directory of DatFunnelDefinitions with conversion %, median time-to-convert, clickable funnel name, icon+text Edit, icon-only Delete."
+      "developmentDetails": "findSWR directory of DatFunnelDefinitions with conversion %, median time-to-convert, clickable funnel name, icon+text Edit, icon-only Delete.",
+      "pageTitle": "Conversion Funnels",
+      "type": "AppPage",
+      "displayOnMenu": true,
+      "description": "findSWR directory of DatFunnelDefinitions with conversion %, median time-to-convert, clickable funnel name, icon+text Edit, icon-only Delete."
     },
     {
       "name": "Retention & Lifecycle",
       "route": "retention-cohorts",
       "htmlFilePath": "pages/retention-cohorts/retention-cohorts.html",
-      "title": "Retention & Lifecycle",
+      "title": "Product Insights",
       "group": "Product Insights",
       "icon": "fas fa-chart-bar",
       "displayInMenu": true,
       "order": 3,
-      "developmentDetails": "Triangular N-day/unbounded cohort heat-map matrix (DatRetentionCohort), New/Current/Resurrected/Dormant lifecycle bars, ARR-weighted toggle."
+      "developmentDetails": "Triangular N-day/unbounded cohort heat-map matrix (DatRetentionCohort), New/Current/Resurrected/Dormant lifecycle bars, ARR-weighted toggle.",
+      "pageTitle": "Retention & Lifecycle",
+      "type": "AppPage",
+      "displayOnMenu": true,
+      "description": "Triangular N-day/unbounded cohort heat-map matrix (DatRetentionCohort), New/Current/Resurrected/Dormant lifecycle bars, ARR-weighted toggle."
     },
     {
       "name": "User Flows & Journeys",
       "route": "user-paths",
       "htmlFilePath": "pages/user-paths/user-paths.html",
-      "title": "User Flows & Journeys",
+      "title": "Product Insights",
       "group": "Product Insights",
       "icon": "fas fa-chart-bar",
       "displayInMenu": true,
       "order": 4,
-      "developmentDetails": "Interactive Sankey/Sunburst DatUserPathAnalysis explorer showing top converting and drop-off paths N steps after entry or before churn/support events."
+      "developmentDetails": "Interactive Sankey/Sunburst DatUserPathAnalysis explorer showing top converting and drop-off paths N steps after entry or before churn/support events.",
+      "pageTitle": "User Flows & Journeys",
+      "type": "AppPage",
+      "displayOnMenu": true,
+      "description": "Interactive Sankey/Sunburst DatUserPathAnalysis explorer showing top converting and drop-off paths N steps after entry or before churn/support events."
     },
     {
       "name": "Behavioral Cohorts",
       "route": "behavioral-segments",
       "htmlFilePath": "pages/behavioral-segments/behavioral-segments.html",
-      "title": "Behavioral Cohorts",
+      "title": "Cohorts & Experiments",
       "group": "Cohorts & Experiments",
       "icon": "fas fa-chart-bar",
       "displayInMenu": true,
       "order": 5,
-      "developmentDetails": "Dynamic DatBehavioralSegment catalog with live user/account counts, CrmAccount health breakdown, and MKT/CRM sync status pills."
+      "developmentDetails": "Dynamic DatBehavioralSegment catalog with live user/account counts, CrmAccount health breakdown, and MKT/CRM sync status pills.",
+      "pageTitle": "Behavioral Cohorts",
+      "type": "AppPage",
+      "displayOnMenu": true,
+      "description": "Dynamic DatBehavioralSegment catalog with live user/account counts, CrmAccount health breakdown, and MKT/CRM sync status pills."
     },
     {
       "name": "Feature Adoption Matrix",
       "route": "feature-adoption",
       "htmlFilePath": "pages/feature-adoption/feature-adoption.html",
-      "title": "Feature Adoption Matrix",
+      "title": "Cohorts & Experiments",
       "group": "Cohorts & Experiments",
       "icon": "fas fa-chart-bar",
       "displayInMenu": true,
       "order": 6,
-      "developmentDetails": "2x2 Breadth-vs.-Frequency quadrant scatter chart across governed Core Events, sliceable by FinSubscription plan tier."
+      "developmentDetails": "2x2 Breadth-vs.-Frequency quadrant scatter chart across governed Core Events, sliceable by FinSubscription plan tier.",
+      "pageTitle": "Feature Adoption Matrix",
+      "type": "AppPage",
+      "displayOnMenu": true,
+      "description": "2x2 Breadth-vs.-Frequency quadrant scatter chart across governed Core Events, sliceable by FinSubscription plan tier."
     },
     {
       "name": "Experiment Readouts",
       "route": "experiment-impact",
       "htmlFilePath": "pages/experiment-impact/experiment-impact.html",
-      "title": "Experiment Readouts",
+      "title": "Cohorts & Experiments",
       "group": "Cohorts & Experiments",
       "icon": "fas fa-chart-bar",
       "displayInMenu": true,
       "order": 7,
-      "developmentDetails": "DatExperimentImpactReport scorecard table showing lift %, confidence intervals, SRM health check, and guardrail error metrics."
+      "developmentDetails": "DatExperimentImpactReport scorecard table showing lift %, confidence intervals, SRM health check, and guardrail error metrics.",
+      "pageTitle": "Experiment Readouts",
+      "type": "AppPage",
+      "displayOnMenu": true,
+      "description": "DatExperimentImpactReport scorecard table showing lift %, confidence intervals, SRM health check, and guardrail error metrics."
     },
     {
       "name": "Event Lexicon & Schema",
       "route": "event-lexicon",
       "htmlFilePath": "pages/event-lexicon/event-lexicon.html",
-      "title": "Event Lexicon & Schema",
+      "title": "Data & Governance",
       "group": "Data & Governance",
       "icon": "fas fa-chart-bar",
       "displayInMenu": true,
       "order": 8,
-      "developmentDetails": "DatEventPropertySchema tracking plan registry with APPROVED / UNEXPECTED / DEPRECATED filter pills, #activeFilterTagsBar, PII badges, and merge action."
+      "developmentDetails": "DatEventPropertySchema tracking plan registry with APPROVED / UNEXPECTED / DEPRECATED filter pills, #activeFilterTagsBar, PII badges, and merge action.",
+      "pageTitle": "Event Lexicon & Schema",
+      "type": "AppPage",
+      "displayOnMenu": true,
+      "description": "DatEventPropertySchema tracking plan registry with APPROVED / UNEXPECTED / DEPRECATED filter pills, #activeFilterTagsBar, PII badges, and merge action."
     },
     {
       "name": "Live Telemetry Debugger",
       "route": "live-event-stream",
       "htmlFilePath": "pages/live-event-stream/live-event-stream.html",
-      "title": "Live Telemetry Debugger",
+      "title": "Data & Governance",
       "group": "Data & Governance",
       "icon": "fas fa-chart-bar",
       "displayInMenu": true,
       "order": 9,
-      "developmentDetails": "Real-time streaming inspector of incoming DatTrackedEvent payloads, schema validation pass/quarantine badges, and masked property preview."
+      "developmentDetails": "Real-time streaming inspector of incoming DatTrackedEvent payloads, schema validation pass/quarantine badges, and masked property preview.",
+      "pageTitle": "Live Telemetry Debugger",
+      "type": "AppPage",
+      "displayOnMenu": true,
+      "description": "Real-time streaming inspector of incoming DatTrackedEvent payloads, schema validation pass/quarantine badges, and masked property preview."
     },
     {
       "name": "SDK Sources & Privacy",
       "route": "telemetry-sources",
       "htmlFilePath": "pages/telemetry-sources/telemetry-sources.html",
-      "title": "SDK Sources & Privacy",
+      "title": "Data & Governance",
       "group": "Data & Governance",
       "icon": "fas fa-chart-bar",
       "displayInMenu": true,
       "order": 10,
-      "developmentDetails": "DatTelemetrySource key management, bot/IP exclusion lists, consent-gate rules, and GDPR subject erasure job console."
+      "developmentDetails": "DatTelemetrySource key management, bot/IP exclusion lists, consent-gate rules, and GDPR subject erasure job console.",
+      "pageTitle": "SDK Sources & Privacy",
+      "type": "AppPage",
+      "displayOnMenu": true,
+      "description": "DatTelemetrySource key management, bot/IP exclusion lists, consent-gate rules, and GDPR subject erasure job console."
     },
     {
       "name": "Funnel Studio & Diagnostics",
       "route": "funnel-detail",
       "htmlFilePath": "pages/funnel-detail/funnel-detail.html",
-      "title": "Funnel Studio & Diagnostics",
-      "group": "(Hidden)",
+      "title": "*(Hidden)*",
+      "group": "*(Hidden)*",
       "icon": "fas fa-chart-bar",
       "displayInMenu": false,
       "order": 11,
-      "developmentDetails": "Interactive step conversion canvas (#/{funnel-detail}?id=...), property breakdown table, friction/rage-click overlay, \"Save Drop-Off Cohort\", and Back to Funnels."
+      "developmentDetails": "Interactive step conversion canvas (#/{funnel-detail}?id=...), property breakdown table, friction/rage-click overlay, \"Save Drop-Off Cohort\", and Back to Funnels.",
+      "pageTitle": "Funnel Studio & Diagnostics",
+      "type": "AppPage",
+      "displayOnMenu": false,
+      "description": "Interactive step conversion canvas (#/{funnel-detail}?id=...), property breakdown table, friction/rage-click overlay, \"Save Drop-Off Cohort\", and Back to Funnels."
     },
     {
       "name": "Funnel & Cohort Builder Drawer",
       "route": "segment-funnel-drawer",
       "htmlFilePath": "pages/segment-funnel-drawer/segment-funnel-drawer.html",
-      "title": "Funnel & Cohort Builder Drawer",
-      "group": "(Hidden)",
+      "title": "*(Hidden)*",
+      "group": "*(Hidden)*",
       "icon": "fas fa-chart-bar",
       "displayInMenu": false,
       "order": 12,
-      "developmentDetails": "Sliding builder drawer for DatFunnelDefinition, DatBehavioralSegment, and DatEventPropertySchema edits; enforces finally button reset and closePageDrawer()."
+      "developmentDetails": "Sliding builder drawer for DatFunnelDefinition, DatBehavioralSegment, and DatEventPropertySchema edits; enforces finally button reset and closePageDrawer().",
+      "pageTitle": "Funnel & Cohort Builder Drawer",
+      "type": "AppPage",
+      "displayOnMenu": false,
+      "description": "Sliding builder drawer for DatFunnelDefinition, DatBehavioralSegment, and DatEventPropertySchema edits; enforces finally button reset and closePageDrawer()."
     }
   ],
   "workflows": [],
@@ -3734,133 +4830,181 @@
       "name": "Engagement Pulse Hub",
       "route": "product-overview",
       "htmlFilePath": "pages/product-overview/product-overview.html",
-      "title": "Engagement Pulse Hub",
+      "title": "Product Insights",
       "group": "Product Insights",
       "icon": "fas fa-chart-bar",
       "displayInMenu": true,
       "order": 1,
-      "developmentDetails": "DAU/WAU/MAU stickiness ribbon, Product Engagement Score (PES), release marker timeline, #activeFilterTagsBar, \"Ask Product Analytics\" launcher."
+      "developmentDetails": "DAU/WAU/MAU stickiness ribbon, Product Engagement Score (PES), release marker timeline, #activeFilterTagsBar, \"Ask Product Analytics\" launcher.",
+      "pageTitle": "Engagement Pulse Hub",
+      "type": "AppPage",
+      "displayOnMenu": true,
+      "description": "DAU/WAU/MAU stickiness ribbon, Product Engagement Score (PES), release marker timeline, #activeFilterTagsBar, \"Ask Product Analytics\" launcher."
     },
     {
       "name": "Conversion Funnels",
       "route": "funnels",
       "htmlFilePath": "pages/funnels/funnels.html",
-      "title": "Conversion Funnels",
+      "title": "Product Insights",
       "group": "Product Insights",
       "icon": "fas fa-chart-bar",
       "displayInMenu": true,
       "order": 2,
-      "developmentDetails": "findSWR directory of DatFunnelDefinitions with conversion %, median time-to-convert, clickable funnel name, icon+text Edit, icon-only Delete."
+      "developmentDetails": "findSWR directory of DatFunnelDefinitions with conversion %, median time-to-convert, clickable funnel name, icon+text Edit, icon-only Delete.",
+      "pageTitle": "Conversion Funnels",
+      "type": "AppPage",
+      "displayOnMenu": true,
+      "description": "findSWR directory of DatFunnelDefinitions with conversion %, median time-to-convert, clickable funnel name, icon+text Edit, icon-only Delete."
     },
     {
       "name": "Retention & Lifecycle",
       "route": "retention-cohorts",
       "htmlFilePath": "pages/retention-cohorts/retention-cohorts.html",
-      "title": "Retention & Lifecycle",
+      "title": "Product Insights",
       "group": "Product Insights",
       "icon": "fas fa-chart-bar",
       "displayInMenu": true,
       "order": 3,
-      "developmentDetails": "Triangular N-day/unbounded cohort heat-map matrix (DatRetentionCohort), New/Current/Resurrected/Dormant lifecycle bars, ARR-weighted toggle."
+      "developmentDetails": "Triangular N-day/unbounded cohort heat-map matrix (DatRetentionCohort), New/Current/Resurrected/Dormant lifecycle bars, ARR-weighted toggle.",
+      "pageTitle": "Retention & Lifecycle",
+      "type": "AppPage",
+      "displayOnMenu": true,
+      "description": "Triangular N-day/unbounded cohort heat-map matrix (DatRetentionCohort), New/Current/Resurrected/Dormant lifecycle bars, ARR-weighted toggle."
     },
     {
       "name": "User Flows & Journeys",
       "route": "user-paths",
       "htmlFilePath": "pages/user-paths/user-paths.html",
-      "title": "User Flows & Journeys",
+      "title": "Product Insights",
       "group": "Product Insights",
       "icon": "fas fa-chart-bar",
       "displayInMenu": true,
       "order": 4,
-      "developmentDetails": "Interactive Sankey/Sunburst DatUserPathAnalysis explorer showing top converting and drop-off paths N steps after entry or before churn/support events."
+      "developmentDetails": "Interactive Sankey/Sunburst DatUserPathAnalysis explorer showing top converting and drop-off paths N steps after entry or before churn/support events.",
+      "pageTitle": "User Flows & Journeys",
+      "type": "AppPage",
+      "displayOnMenu": true,
+      "description": "Interactive Sankey/Sunburst DatUserPathAnalysis explorer showing top converting and drop-off paths N steps after entry or before churn/support events."
     },
     {
       "name": "Behavioral Cohorts",
       "route": "behavioral-segments",
       "htmlFilePath": "pages/behavioral-segments/behavioral-segments.html",
-      "title": "Behavioral Cohorts",
+      "title": "Cohorts & Experiments",
       "group": "Cohorts & Experiments",
       "icon": "fas fa-chart-bar",
       "displayInMenu": true,
       "order": 5,
-      "developmentDetails": "Dynamic DatBehavioralSegment catalog with live user/account counts, CrmAccount health breakdown, and MKT/CRM sync status pills."
+      "developmentDetails": "Dynamic DatBehavioralSegment catalog with live user/account counts, CrmAccount health breakdown, and MKT/CRM sync status pills.",
+      "pageTitle": "Behavioral Cohorts",
+      "type": "AppPage",
+      "displayOnMenu": true,
+      "description": "Dynamic DatBehavioralSegment catalog with live user/account counts, CrmAccount health breakdown, and MKT/CRM sync status pills."
     },
     {
       "name": "Feature Adoption Matrix",
       "route": "feature-adoption",
       "htmlFilePath": "pages/feature-adoption/feature-adoption.html",
-      "title": "Feature Adoption Matrix",
+      "title": "Cohorts & Experiments",
       "group": "Cohorts & Experiments",
       "icon": "fas fa-chart-bar",
       "displayInMenu": true,
       "order": 6,
-      "developmentDetails": "2x2 Breadth-vs.-Frequency quadrant scatter chart across governed Core Events, sliceable by FinSubscription plan tier."
+      "developmentDetails": "2x2 Breadth-vs.-Frequency quadrant scatter chart across governed Core Events, sliceable by FinSubscription plan tier.",
+      "pageTitle": "Feature Adoption Matrix",
+      "type": "AppPage",
+      "displayOnMenu": true,
+      "description": "2x2 Breadth-vs.-Frequency quadrant scatter chart across governed Core Events, sliceable by FinSubscription plan tier."
     },
     {
       "name": "Experiment Readouts",
       "route": "experiment-impact",
       "htmlFilePath": "pages/experiment-impact/experiment-impact.html",
-      "title": "Experiment Readouts",
+      "title": "Cohorts & Experiments",
       "group": "Cohorts & Experiments",
       "icon": "fas fa-chart-bar",
       "displayInMenu": true,
       "order": 7,
-      "developmentDetails": "DatExperimentImpactReport scorecard table showing lift %, confidence intervals, SRM health check, and guardrail error metrics."
+      "developmentDetails": "DatExperimentImpactReport scorecard table showing lift %, confidence intervals, SRM health check, and guardrail error metrics.",
+      "pageTitle": "Experiment Readouts",
+      "type": "AppPage",
+      "displayOnMenu": true,
+      "description": "DatExperimentImpactReport scorecard table showing lift %, confidence intervals, SRM health check, and guardrail error metrics."
     },
     {
       "name": "Event Lexicon & Schema",
       "route": "event-lexicon",
       "htmlFilePath": "pages/event-lexicon/event-lexicon.html",
-      "title": "Event Lexicon & Schema",
+      "title": "Data & Governance",
       "group": "Data & Governance",
       "icon": "fas fa-chart-bar",
       "displayInMenu": true,
       "order": 8,
-      "developmentDetails": "DatEventPropertySchema tracking plan registry with APPROVED / UNEXPECTED / DEPRECATED filter pills, #activeFilterTagsBar, PII badges, and merge action."
+      "developmentDetails": "DatEventPropertySchema tracking plan registry with APPROVED / UNEXPECTED / DEPRECATED filter pills, #activeFilterTagsBar, PII badges, and merge action.",
+      "pageTitle": "Event Lexicon & Schema",
+      "type": "AppPage",
+      "displayOnMenu": true,
+      "description": "DatEventPropertySchema tracking plan registry with APPROVED / UNEXPECTED / DEPRECATED filter pills, #activeFilterTagsBar, PII badges, and merge action."
     },
     {
       "name": "Live Telemetry Debugger",
       "route": "live-event-stream",
       "htmlFilePath": "pages/live-event-stream/live-event-stream.html",
-      "title": "Live Telemetry Debugger",
+      "title": "Data & Governance",
       "group": "Data & Governance",
       "icon": "fas fa-chart-bar",
       "displayInMenu": true,
       "order": 9,
-      "developmentDetails": "Real-time streaming inspector of incoming DatTrackedEvent payloads, schema validation pass/quarantine badges, and masked property preview."
+      "developmentDetails": "Real-time streaming inspector of incoming DatTrackedEvent payloads, schema validation pass/quarantine badges, and masked property preview.",
+      "pageTitle": "Live Telemetry Debugger",
+      "type": "AppPage",
+      "displayOnMenu": true,
+      "description": "Real-time streaming inspector of incoming DatTrackedEvent payloads, schema validation pass/quarantine badges, and masked property preview."
     },
     {
       "name": "SDK Sources & Privacy",
       "route": "telemetry-sources",
       "htmlFilePath": "pages/telemetry-sources/telemetry-sources.html",
-      "title": "SDK Sources & Privacy",
+      "title": "Data & Governance",
       "group": "Data & Governance",
       "icon": "fas fa-chart-bar",
       "displayInMenu": true,
       "order": 10,
-      "developmentDetails": "DatTelemetrySource key management, bot/IP exclusion lists, consent-gate rules, and GDPR subject erasure job console."
+      "developmentDetails": "DatTelemetrySource key management, bot/IP exclusion lists, consent-gate rules, and GDPR subject erasure job console.",
+      "pageTitle": "SDK Sources & Privacy",
+      "type": "AppPage",
+      "displayOnMenu": true,
+      "description": "DatTelemetrySource key management, bot/IP exclusion lists, consent-gate rules, and GDPR subject erasure job console."
     },
     {
       "name": "Funnel Studio & Diagnostics",
       "route": "funnel-detail",
       "htmlFilePath": "pages/funnel-detail/funnel-detail.html",
-      "title": "Funnel Studio & Diagnostics",
-      "group": "(Hidden)",
+      "title": "*(Hidden)*",
+      "group": "*(Hidden)*",
       "icon": "fas fa-chart-bar",
       "displayInMenu": false,
       "order": 11,
-      "developmentDetails": "Interactive step conversion canvas (#/{funnel-detail}?id=...), property breakdown table, friction/rage-click overlay, \"Save Drop-Off Cohort\", and Back to Funnels."
+      "developmentDetails": "Interactive step conversion canvas (#/{funnel-detail}?id=...), property breakdown table, friction/rage-click overlay, \"Save Drop-Off Cohort\", and Back to Funnels.",
+      "pageTitle": "Funnel Studio & Diagnostics",
+      "type": "AppPage",
+      "displayOnMenu": false,
+      "description": "Interactive step conversion canvas (#/{funnel-detail}?id=...), property breakdown table, friction/rage-click overlay, \"Save Drop-Off Cohort\", and Back to Funnels."
     },
     {
       "name": "Funnel & Cohort Builder Drawer",
       "route": "segment-funnel-drawer",
       "htmlFilePath": "pages/segment-funnel-drawer/segment-funnel-drawer.html",
-      "title": "Funnel & Cohort Builder Drawer",
-      "group": "(Hidden)",
+      "title": "*(Hidden)*",
+      "group": "*(Hidden)*",
       "icon": "fas fa-chart-bar",
       "displayInMenu": false,
       "order": 12,
-      "developmentDetails": "Sliding builder drawer for DatFunnelDefinition, DatBehavioralSegment, and DatEventPropertySchema edits; enforces finally button reset and closePageDrawer()."
+      "developmentDetails": "Sliding builder drawer for DatFunnelDefinition, DatBehavioralSegment, and DatEventPropertySchema edits; enforces finally button reset and closePageDrawer().",
+      "pageTitle": "Funnel & Cohort Builder Drawer",
+      "type": "AppPage",
+      "displayOnMenu": false,
+      "description": "Sliding builder drawer for DatFunnelDefinition, DatBehavioralSegment, and DatEventPropertySchema edits; enforces finally button reset and closePageDrawer()."
     }
   ]
 }
